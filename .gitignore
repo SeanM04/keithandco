@@ -1,0 +1,14 @@
+# Full-resolution originals kept locally as a safety backup — not needed in the repo
+assets/images/_originals/
+assets/logos/_originals/
+
+# Staging folder of duplicate/unusable client logos (see CLAUDE.md TODOs)
+assets/logos/company_logos/
+
+# Unused source photos not referenced by any page
+assets/images/team-on-site1.jpg
+assets/images/catering.jpg
+
+# OS/editor cruft
+.DS_Store
+Thumbs.db
