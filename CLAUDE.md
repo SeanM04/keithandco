@@ -53,7 +53,7 @@ apply the same change to ALL four HTML files.
   Managers, Argon Asset Management. Janus Henderson logo received but only as
   `.eps` (in `assets/logos/company_logos/`, not web-usable) — swap in once a
   PNG/JPG/SVG version arrives.
-- Contact: Building C, Basement 1, Sandhurst Office Park, Cnr Rivonia Road and
+- Contact: Sandhurst Office Park, The Grove building, Cnr Rivonia Road and
   Harrow Road, Sandhurst, Johannesburg, Gauteng; 081 767 2224
   (`tel:+27817672224`) — single number, used everywhere (the old two-number
   set is retired). Reg No: 2015/449586/07.
