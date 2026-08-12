@@ -42,8 +42,11 @@ apply the same change to ALL four HTML files.
   infrastructure & project management, "quality rather than quantity",
   global standards, alleviating event pressure. Keep this voice: confident,
   concrete, no hype.
-- Values (fixed list): Going above & beyond, Customer service, Excellence
-  delivered, Integrity, Innovation, Passion, Sustainability.
+- Values: shown on about.html as a single branded graphic
+  (`assets/images/values-mural.jpg`, from the client's own mural artwork,
+  2400x1200 source at `Mural_5x2.5m_100dpi_upscaled.jpg`) rather than a text
+  list. Values as depicted: Excellence, Integrity, Innovation, Customer
+  Focus, Passion, Exceptional Experiences.
 - Achievements (fixed list): Mining Indaba, 62nd International Astronautical
   Congress, Africa Utility Week, Africa Energy Indaba, Commonwealth Law
   Congress. Venues: CTICC, Sandton Convention Centre, Spier, ELCC, DICC, SCC.

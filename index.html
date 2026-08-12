@@ -68,10 +68,8 @@
   <div class="hero-diamonds hero-diamonds-left" aria-hidden="true"><div class="d1"></div><div class="d2"></div><div class="d3"></div></div>
   <div class="wrap hero-inner">
     <div class="hero-grid">
-      <div class="hero-logo" role="img" aria-label="Keith &amp; Co. Consulting">
-        <img class="mark" src="assets/logos/keithco-mark-onnavy.svg" alt="" aria-hidden="true">
-        <span class="script" aria-hidden="true">Keith &amp; Co.</span>
-        <span class="sub" aria-hidden="true">CONSULTING</span>
+      <div class="hero-logo">
+        <img class="lockup" src="assets/logos/keithco-lockup-onnavy.svg" alt="Keith &amp; Co. Consulting">
       </div>
       <div class="hero-copy">
         <p class="kicker">Event Infrastructure &middot; South Africa</p>
@@ -103,7 +101,7 @@
 </div>
 
 <!-- About teaser -->
-<section class="block">
+<section class="block about-fit">
   <div class="wrap about-grid">
     <div class="about-copy reveal">
       <p class="eyebrow">About Us</p>
@@ -113,7 +111,11 @@
       <a class="btn btn-navy" href="about.html" style="margin-top:10px">More about us</a>
     </div>
     <div class="about-visual reveal">
-      <div class="photo" style="background-image:url('assets/images/about-stand.jpg')"></div>
+      <div class="gallery" role="img" aria-label="Photos of Keith &amp; Co. event and exhibition builds">
+        <div class="g-slide" style="background-image:url('assets/images/about-stand-1.jpg')"></div>
+        <div class="g-slide" style="background-image:url('assets/images/about-stand-2.jpg')"></div>
+        <div class="g-slide" style="background-image:url('assets/images/about-stand-3.jpg')"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -129,11 +131,6 @@
       <p class="lede">From the first concept sketch to the last cable coiled, every service line is managed under one roof — one accountable partner, not seven suppliers.</p>
     </div>
     <div class="svc-grid">
-      <a class="svc reveal" data-svc="pm" href="services.html#project-management">
-        <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/></svg></div>
-        <h3>Project Management</h3>
-        <p>End-to-end coordination of your event build — timelines, suppliers, logistics and on-site delivery.</p>
-      </a>
       <a class="svc reveal" data-svc="custom-stand" href="services.html#custom-stands">
         <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 20h18M5 20V9l7-5 7 5v11M9 20v-6h6v6"/></svg></div>
         <h3>Custom Stand Design &amp; Build</h3>
@@ -144,32 +141,37 @@
         <h3>Shell Scheme Design &amp; Build</h3>
         <p>Smart, cost-effective modular shell schemes for exhibitions of any scale.</p>
       </a>
-      <!-- <a class="svc reveal" data-svc="xboard" href="services.html#xboard">
-        <span class="tag">ECO</span>
-        <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 21c-5 0-8-3.5-8-8 0-5.5 8-10 8-10s8 4.5 8 10c0 4.5-3 8-8 8Z"/><path d="M12 21V9"/></svg></div>
-        <h3>Xboard Stand Design &amp; Build</h3>
-        <p>Eco-friendly, fully recyclable Xboard stands — sustainability without compromising impact.</p>
-      </a> -->
-      <a class="svc reveal" data-svc="av" href="services.html#audio-visual">
-        <div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="12"/><path d="M9 21h6M12 17v4"/></svg></div>
-        <h3>Audio Visual Design &amp; Setup</h3>
-        <p>Screens, sound, lighting and staging designed and installed to make your content land.</p>
+      <a class="svc reveal" data-svc="pm" href="services.html#project-management">
+        <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/></svg></div>
+        <h3>Project Management</h3>
+        <p>End-to-end coordination of your event build — timelines, suppliers, logistics and on-site delivery.</p>
       </a>
       <a class="svc reveal" data-svc="furniture" href="services.html#furniture">
         <div class="icon"><svg viewBox="0 0 24 24"><path d="M5 12h14M5 12v7M19 12v7M7 12V8h10v4"/></svg></div>
         <h3>Furniture Hire</h3>
         <p>Quality event furniture for hire — seating, cocktail sets, counters and display units.</p>
       </a>
-      <a class="svc reveal" data-svc="marquee" href="services.html#marquees">
-        <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 20L12 5l9 15M7.5 20L12 12l4.5 8"/></svg></div>
-        <h3>Marquees &amp; Bedouin Tents</h3>
-        <p>Weatherproof marquees and free-form stretch tents for outdoor events and activations.</p>
-      </a>
       <a class="svc reveal" data-svc="electrics" href="services.html#electrics">
         <div class="icon"><svg viewBox="0 0 24 24"><path d="M13 2L5 13h6l-1 9 8-11h-6l1-9Z"/></svg></div>
         <h3>Electrics</h3>
         <p>Certified event electrical installations — safe, compliant and reliable.</p>
       </a>
+      <a class="svc reveal" data-svc="av" href="services.html#audio-visual">
+        <div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="12"/><path d="M9 21h6M12 17v4"/></svg></div>
+        <h3>Audio Visual Design &amp; Setup</h3>
+        <p>Screens, sound, lighting and staging designed and installed to make your content land.</p>
+      </a>
+      <a class="svc reveal" data-svc="marquee" href="services.html#marquees">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 20L12 5l9 15M7.5 20L12 12l4.5 8"/></svg></div>
+        <h3>Marquees &amp; Bedouin Tents</h3>
+        <p>Weatherproof marquees and free-form stretch tents for outdoor events and activations.</p>
+      </a>
+      <!-- <a class="svc reveal" data-svc="xboard" href="services.html#xboard">
+        <span class="tag">ECO</span>
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 21c-5 0-8-3.5-8-8 0-5.5 8-10 8-10s8 4.5 8 10c0 4.5-3 8-8 8Z"/><path d="M12 21V9"/></svg></div>
+        <h3>Xboard Stand Design &amp; Build</h3>
+        <p>Eco-friendly, fully recyclable Xboard stands — sustainability without compromising impact.</p>
+      </a> -->
     </div>
   </div>
 </section>
@@ -197,13 +199,55 @@
     <p class="eyebrow">Associates &amp; Clients</p>
     <h2 class="section-title">Trusted by the industry</h2>
     <p class="lede">A tried-and-tested network of South African and African partners — and clients who come back.</p>
-    <div class="logo-row reveal">
-      <div class="logo-slot has-logo"><img src="assets/logos/client-aberdeen-standard.jpg" alt="Aberdeen Standard Investments"></div>
-      <div class="logo-slot has-logo"><img src="assets/logos/client-acpi.jpg" alt="ACPI Investment Managers"></div>
-      <div class="logo-slot has-logo"><img src="assets/logos/client-batseta.jpg" alt="Batseta — Council of Retirement Funds for South Africa"></div>
-      <div class="logo-slot has-logo"><img src="assets/logos/client-egf.jpg" alt="Event Greening Forum"></div>
-      <div class="logo-slot has-logo"><img src="assets/logos/client-vunani.jpg" alt="Vunani Fund Managers"></div>
-      <div class="logo-slot has-logo"><img src="assets/logos/client-argon.jpg" alt="Argon Asset Management"></div>
+    <div class="logo-carousel reveal">
+      <div class="logo-track">
+        <div class="logo-slot has-logo"><img src="assets/logos/client-aberdeen-standard.jpg" alt="Aberdeen Standard Investments"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-acpi.jpg" alt="ACPI Investment Managers"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-batseta.jpg" alt="Batseta — Council of Retirement Funds for South Africa"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-egf.jpg" alt="Event Greening Forum"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-vunani.jpg" alt="Vunani Fund Managers"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-argon.jpg" alt="Argon Asset Management"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-first-medical.jpg" alt="First Medical Company"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-santam.png" alt="Santam"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-oldmutual.png" alt="Old Mutual"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-70salt.png" alt="Salt Employee Benefits"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-27four.png" alt="27four"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-ashburton.png" alt="Ashburton Investments"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-austell.png" alt="Austell"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-mahlako.png" alt="Mahlako"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-medika.png" alt="Medika SA"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-allan-gray.png" alt="Allan Gray"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-foord.png" alt="Foord Asset Management"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-glacier.png" alt="Glacier by Sanlam"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-metropolitan.png" alt="Metropolitan Health"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-momentum.png" alt="Momentum Group"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-otto1890.png" alt="Otto1890 Investment Specialists"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-pianoboard.png" alt="Pianoboard Krah Pipes"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-sanlam.png" alt="Sanlam"></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-aberdeen-standard.jpg" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-acpi.jpg" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-batseta.jpg" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-egf.jpg" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-vunani.jpg" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-argon.jpg" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-first-medical.jpg" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-santam.png" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-oldmutual.png" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-70salt.png" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-27four.png" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-ashburton.png" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-austell.png" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-mahlako.png" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-medika.png" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-allan-gray.png" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-foord.png" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-glacier.png" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-metropolitan.png" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-momentum.png" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-otto1890.png" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-pianoboard.png" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-sanlam.png" alt=""></div>
+      </div>
     </div>
   </div>
 </section>
