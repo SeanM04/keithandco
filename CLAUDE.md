@@ -17,7 +17,8 @@ client's needs change; simplicity is a feature here.
 - `css/styles.css` — the entire design system (single stylesheet)
 - `js/main.js` — slider, mobile menu, scroll reveal, active-nav, form handler
   (enquiry form on `contact.html` posts to Formspree via fetch, with an inline
-  success/error message; endpoint is `https://formspree.io/f/meeygaaq`)
+  success/error message; endpoint is `https://formspree.io/f/xzepgqwg`, set
+  to deliver to Keith & Co's info@keithandco.co.za inbox)
 - `assets/images/` — photography (hero slides, service images) — mostly TODO
 - `assets/logos/` — company + client logos — mostly TODO
 
@@ -30,8 +31,22 @@ apply the same change to ALL four HTML files.
   ink `#141f30`
 - Greyscale: silver `#b9bdc4`, mist `#f2f3f5`, cloud `#e6e8eb`, white `#ffffff`
 - NO other hues. No accent colours, no gradients outside the navy/grey family.
-- Fonts: Archivo (display/headings, weights 600–800), Inter (body),
-  Allura (script accents only — mimics the logo's "Keith & Co." script)
+- Fonts: Archivo (display/headings, weights 600–800), Inter (body).
+  Wordmark: "Keith & Co." is Halo Handletter (script, `--font-script`,
+  self-hosted @font-face, file live at `assets/fonts/HaloHandletter.woff2`
+  and `.woff` — donationware; commercial use needs a donation to the
+  author, see dafont.com/halohandletter.font — TODO: donation not yet made).
+  "CONSULTING" subtext is Myriad Pro (`--font-wordmark-sub`, via Adobe
+  Fonts/Typekit web embed, kit live at use.typekit.net/lxe2zei.css, linked
+  in the `<head>` of index/about/services/contact.html). Client is on
+  Adobe's free plan, which only includes Myriad Pro Bold/Bold Condensed —
+  Semibold needs a Creative Cloud subscription. Decision: ship on Bold
+  (`.sub` is explicitly `font-weight:700` to match on purpose) rather than
+  subscribe for one small letter-spaced label; revisit if/when Creative
+  Cloud gets picked up for other reasons — Semibold would activate through
+  the same kit URL with no relink needed.
+  Allura remains loaded as the Halo Handletter fallback only — not used
+  elsewhere now that the real logo font is known.
 - Signature motif: the 45°-rotated square (diamond), taken from the logo.
   Used for bullets, eyebrow markers, social icons, background shapes.
 - Text on navy is white/silver; drop shadows are subtle (`--shadow` token).
@@ -70,7 +85,11 @@ apply the same change to ALL four HTML files.
    lattice) as an interim improvement — still not real photos.
 2. Swap in a real Janus Henderson logo (PNG/JPG/SVG) once available —
    `.eps` can't be used on the web.
-3. Replace testimonial placeholders with real quotes.
+3. First testimonial (First Medical) is real; second (Batseta, from their
+   signed recommendation letter) added 2026-08-14. Both slots on
+   contact.html now filled — no more testimonial TODO unless a third is
+   ever wanted (the `.t-stage` crossfade is tuned for exactly 2 slides,
+   7s/14s timing — adding a 3rd needs a CSS delay/animation tweak).
 4. Real photography exists for services/about (assets/images/) but is
    applied via CSS `background-image` on `<div>`s, not `<img>` tags — so
    none of it has an accessible text alternative for screen readers. Same
@@ -79,9 +98,51 @@ apply the same change to ALL four HTML files.
    logos + the unusable Janus Henderson `.eps`) and two orphaned unused
    images (`team-on-site1.jpg`, `catering.jpg`) aren't referenced by any
    page — worth excluding from deploy or deleting.
+6. Make the commercial-use donation for Halo Handletter to the author
+   (dafont.com/halohandletter.font lists a PayPal address) — the font file
+   itself is already live and wired up, only the donation is outstanding.
+7. (Deferred, not blocking) Myriad Pro Semibold for `.brand .name .sub`
+   needs a Creative Cloud subscription — client's free Adobe Fonts plan
+   only includes Bold/Bold Condensed. Shipped on Bold instead (see brand
+   rules above). Revisit only if Creative Cloud gets picked up anyway.
 
 ### Done (audited 2026-07-22)
 
+- Added consistent-height testimonial previews with a "Read more"/"Show
+  less" toggle (`.t-text`/`.t-more` in styles.css, wired up in main.js)
+  2026-08-17. Once the Batseta letter's full 7 paragraphs were shown in
+  full, its slide towered over the short First Medical one (same grid-cell
+  sizing that fixed the cut-off bug above now stretched the short slide to
+  match). Each `.t-text` clamps to 100px with a fade + "Read more" — but
+  ONLY on slides where content actually overflows (measured via
+  `scrollHeight` after `document.fonts.ready`, tagged with a `.has-more`
+  class); a slide that fits at the current viewport width gets no fade and
+  no button, so it never falsely implies hidden content. Clicking "Read
+  more" also force-pauses the crossfade so it can't fade away mid-read.
+- Fixed the Batseta testimonial rendering cut off on contact.html: `.t-stage`
+  had a fixed `min-height:320px` with absolutely-positioned `.t-slide`
+  children, so the box never actually grew for longer text — it only
+  looked fine before because both testimonials happened to be short.
+  Rebuilt as a CSS grid stack (`grid-area:1/1` on every slide) so the box
+  auto-sizes to whichever slide is tallest.
+- Furniture gallery (services.html) got a 4th photo (`furniture-4.jpg`)
+  2026-08-17 — class dropped from `gallery-3` to no modifier, since 4
+  slides is the system's default timing.
+- Compressed 7 uncompressed camera-original photos added over the course
+  of this session (`about-stand-2.jpg`, `audio-2.jpg`, `custom-stand-1.jpg`,
+  `furniture-1.jpg`, `furniture-4.jpg`, `shell-build-2.jpg`,
+  `who-we-are-3.jpg`) — same treatment as the earlier cleanup: 1800px long
+  edge, JPEG quality 80, full-res masters saved/overwritten in
+  `assets/images/_originals/`. ~20MB combined down to ~2.4MB.
+- Shell Scheme gallery (services.html) rebuilt 2026-08-17: old
+  `shell-build-1..5` refs had gone stale (files 2/4/5 deleted, 2's
+  extension changed) leaving most of the gallery broken. Replaced with the
+  client's 3 new photos (`shell-build-1.jpg`, `-2.jpg`, `-3.jpg`), class
+  dropped from `gallery-5` to `gallery-3` to match. `-3.jpg` is a wide
+  (1.76 AR) render on a white background — letterboxed via
+  `background-size:contain;background-color:var(--white)` rather than
+  cropped, and white (not the usual `--navy-deep`) so the letterbox bars
+  are invisible against the render's own white background.
 - Sitemap.xml + robots.txt added (site root).
 - The 6 oversized photos actually in use (services.html, about.html) were
   6000px+ camera/phone originals at 3.3–5.7MB each — resized to 1800px

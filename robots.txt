@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /developer-guide.html
 
 Sitemap: https://www.keithandco.co.za/sitemap.xml

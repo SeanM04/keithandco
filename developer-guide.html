@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Developer Guide — Keith &amp; Co. Consulting Website</title>
+
+<!-- Same font sources as the live site, so the previews below are accurate,
+     not approximations. See "Typography" for why each one is loaded. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=Allura&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.typekit.net/lxe2zei.css">
+<!-- Pulls in the real design tokens (--navy etc.), @font-face for Halo
+     Handletter, and nothing else — this doc's own layout uses doc- prefixed
+     classes below so it never collides with the site's component styles. -->
+<link rel="stylesheet" href="css/styles.css">
+
+<style>
+  :root{
+    --doc-bg:#f7f8fa;
+    --doc-panel:#ffffff;
+    --doc-border:#e2e5ea;
+    --doc-code-bg:#141f30;
+    --doc-code-fg:#e6e8eb;
+    --doc-warn-bg:#fff4e5;
+    --doc-warn-border:#e8a33d;
+    --doc-ok-bg:#eef6ee;
+    --doc-ok-border:#4c9a5f;
+    --doc-max:840px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:var(--font-body);
+    color:var(--navy-ink);
+    background:var(--doc-bg);
+    line-height:1.65;
+    font-size:16px;
+  }
+  a{color:var(--navy)}
+  code, .doc-mono{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:.88em;
+    background:var(--mist);
+    padding:.15em .4em;
+    border-radius:4px;
+  }
+  pre{
+    background:var(--doc-code-bg);
+    color:var(--doc-code-fg);
+    padding:16px 18px;
+    border-radius:8px;
+    overflow-x:auto;
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:13.5px;
+    line-height:1.6;
+  }
+  pre code{background:none;padding:0;color:inherit;font-size:inherit}
+
+  /* ---- shell / layout ---- */
+  .doc-shell{display:flex;max-width:1280px;margin:0 auto}
+  .doc-side{
+    width:264px;flex:none;position:sticky;top:0;align-self:flex-start;
+    height:100vh;overflow-y:auto;padding:32px 20px 40px;
+    border-right:1px solid var(--doc-border);
+  }
+  .doc-side h1{
+    font-family:var(--font-display);font-size:15px;font-weight:800;
+    color:var(--navy);letter-spacing:.01em;margin:0 0 2px;
+  }
+  .doc-side .doc-tag{
+    font-size:11.5px;color:var(--text-muted);margin-bottom:22px;display:block;
+  }
+  .doc-side nav a{
+    display:block;font-size:13.5px;color:var(--text-body);text-decoration:none;
+    padding:6px 10px;border-radius:6px;margin-bottom:2px;
+  }
+  .doc-side nav a:hover, .doc-side nav a:focus-visible{background:var(--mist);color:var(--navy)}
+  .doc-side nav .doc-h2link{font-weight:700;color:var(--navy-ink);margin-top:14px}
+  .doc-side nav .doc-h3link{padding-left:22px;font-size:12.5px}
+
+  .doc-main{flex:1;min-width:0;padding:44px 48px 120px;max-width:var(--doc-max)}
+  .doc-hero{margin-bottom:40px}
+  .doc-hero h1{font-family:var(--font-display);font-weight:800;font-size:30px;color:var(--navy-ink);margin:0 0 10px}
+  .doc-hero p{color:var(--text-body);font-size:15.5px;max-width:62ch}
+  .doc-meta{
+    display:flex;gap:16px;flex-wrap:wrap;margin-top:16px;font-size:12.5px;
+    color:var(--text-muted);
+  }
+  .doc-meta span{display:flex;align-items:center;gap:6px}
+  .doc-meta .dia{width:6px;height:6px;background:var(--silver);transform:rotate(45deg);display:inline-block;flex:none}
+
+  section.doc-section{margin-top:56px;padding-top:8px}
+  section.doc-section > h2{
+    font-family:var(--font-display);font-weight:800;font-size:22px;
+    color:var(--navy-ink);border-bottom:2px solid var(--cloud);
+    padding-bottom:10px;margin:0 0 18px;scroll-margin-top:24px;
+  }
+  section.doc-section h3{
+    font-family:var(--font-display);font-weight:700;font-size:16px;
+    color:var(--navy);margin:26px 0 8px;scroll-margin-top:24px;
+  }
+  section.doc-section p{color:var(--text-body);margin:0 0 12px}
+  section.doc-section ul, section.doc-section ol{color:var(--text-body);margin:0 0 14px;padding-left:22px}
+  section.doc-section li{margin-bottom:6px}
+  section.doc-section li code{white-space:nowrap}
+
+  .doc-card{
+    background:var(--doc-panel);border:1px solid var(--doc-border);
+    border-radius:10px;padding:20px 22px;margin:16px 0;
+  }
+  .doc-callout{border-radius:8px;padding:14px 18px;margin:16px 0;font-size:14.5px}
+  .doc-callout.warn{background:var(--doc-warn-bg);border:1px solid var(--doc-warn-border);color:#6b4a12}
+  .doc-callout.ok{background:var(--doc-ok-bg);border:1px solid var(--doc-ok-border);color:#255c32}
+  .doc-callout strong{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+
+  table.doc-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
+  table.doc-table th, table.doc-table td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--doc-border);vertical-align:top}
+  table.doc-table th{font-family:var(--font-display);font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted)}
+  table.doc-table tr:last-child td{border-bottom:none}
+
+  .doc-filetree{background:var(--doc-panel);border:1px solid var(--doc-border);border-radius:10px;padding:18px 22px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;line-height:1.85;color:var(--navy-ink)}
+  .doc-filetree .c{color:var(--text-muted)}
+
+  /* swatches — pull real tokens straight from styles.css, never hand-typed */
+  .doc-swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin:16px 0}
+  .doc-swatch{border-radius:8px;overflow:hidden;border:1px solid var(--doc-border)}
+  .doc-swatch .fill{height:60px}
+  .doc-swatch .label{background:var(--doc-panel);padding:8px 10px;font-size:11.5px}
+  .doc-swatch .label b{display:block;font-family:var(--font-display);color:var(--navy-ink)}
+  .doc-swatch .label span{color:var(--text-muted);font-family:ui-monospace,monospace;font-size:11px}
+
+  .doc-fontcard{background:var(--doc-panel);border:1px solid var(--doc-border);border-radius:10px;padding:20px 22px;margin:14px 0}
+  .doc-fontcard .sample{font-size:32px;color:var(--navy-ink);margin-bottom:8px}
+  .doc-fontcard .meta{font-size:12.5px;color:var(--text-muted)}
+  .doc-fontcard .meta code{margin-right:4px}
+
+  .doc-dia{width:8px;height:8px;background:var(--navy);display:inline-block;transform:rotate(45deg);flex:none;margin-right:8px}
+
+  @media(max-width:900px){
+    .doc-shell{flex-direction:column}
+    .doc-side{position:relative;height:auto;width:auto;border-right:none;border-bottom:1px solid var(--doc-border)}
+    .doc-main{padding:32px 22px 100px;max-width:100%}
+  }
+</style>
+</head>
+<body>
+
+<div class="doc-shell">
+  <aside class="doc-side">
+    <h1>Developer Guide</h1>
+    <span class="doc-tag">Keith &amp; Co. Consulting website</span>
+    <nav>
+      <a class="doc-h2link" href="#overview">Overview</a>
+      <a class="doc-h2link" href="#structure">File structure</a>
+      <a class="doc-h2link" href="#design-system">Design system</a>
+      <a class="doc-h3link" href="#colors">Colors</a>
+      <a class="doc-h3link" href="#typography">Typography</a>
+      <a class="doc-h3link" href="#motif">Diamond motif</a>
+      <a class="doc-h2link" href="#pages">Pages</a>
+      <a class="doc-h2link" href="#js">JavaScript (main.js)</a>
+      <a class="doc-h2link" href="#galleries">Image galleries</a>
+      <a class="doc-h3link" href="#gallery-gotcha">The recurring gotcha</a>
+      <a class="doc-h2link" href="#testimonials">Testimonials</a>
+      <a class="doc-h2link" href="#forms">Contact form</a>
+      <a class="doc-h2link" href="#seo">SEO &amp; meta</a>
+      <a class="doc-h2link" href="#run-deploy">Run &amp; deploy</a>
+      <a class="doc-h2link" href="#git">Git</a>
+      <a class="doc-h2link" href="#known-issues">Known issues</a>
+    </nav>
+  </aside>
+
+  <main class="doc-main">
+    <div class="doc-hero">
+      <h1>Keith &amp; Co. Consulting — Developer Guide</h1>
+      <p>A technical walkthrough of how this site is built, for whoever picks it up next. It explains the patterns and the reasoning behind them — the day-to-day status (what's outstanding, what changed recently) lives in <code>CLAUDE.md</code> instead, since that file gets updated every time the content changes and this one won't.</p>
+      <div class="doc-meta">
+        <span><span class="dia"></span> Plain HTML/CSS/JS, no build step, no framework</span>
+        <span><span class="dia"></span> Last written 2026-08-14</span>
+        <span><span class="dia"></span> See CLAUDE.md for current TODOs</span>
+      </div>
+    </div>
+
+    <section class="doc-section" id="overview">
+      <h2>Overview</h2>
+      <p>Static marketing site for Keith &amp; Co Consulting (Pty) Ltd, a South African event infrastructure and project management company. Five HTML pages, one stylesheet, one script file, no dependencies, no package.json, nothing to compile. That's a deliberate choice, not an oversight — keep it that way unless the client's needs genuinely outgrow it.</p>
+      <p>Everything renders straight from these files on any static host. Open <code>index.html</code> in a browser and it works; there's no dev server requirement, though running one (see <a href="#run-deploy">Run &amp; deploy</a>) makes relative paths behave exactly like production.</p>
+    </section>
+
+    <section class="doc-section" id="structure">
+      <h2>File structure</h2>
+      <div class="doc-filetree">
+index.html          <span class="c">Home</span><br>
+about.html           <span class="c">About Us</span><br>
+services.html        <span class="c">Services — 7 live service lines, 1 commented-out (Xboard)</span><br>
+contact.html         <span class="c">Contact form + testimonials</span><br>
+coming-soon.html     <span class="c">Standalone pre-launch page — own layout, SVG logo lockup, not linked from nav or sitemap</span><br>
+css/styles.css       <span class="c">The entire design system — one file, ~30KB</span><br>
+js/main.js           <span class="c">All interactive behavior — one file, vanilla JS</span><br>
+assets/fonts/        <span class="c">Self-hosted Halo Handletter (woff2 + woff)</span><br>
+assets/images/       <span class="c">Photography — see _originals/ for full-res masters before web crops</span><br>
+assets/logos/        <span class="c">Company + client logos</span><br>
+favicon.ico, robots.txt, sitemap.xml<br>
+CLAUDE.md            <span class="c">Living brand rules, content rules, current TODO list</span><br>
+README.md            <span class="c">Quick start</span><br>
+developer-guide.html <span class="c">This file</span>
+      </div>
+      <p style="margin-top:14px">The top contact bar, sticky header, and footer are duplicated <strong>by hand</strong> across <code>index.html</code>, <code>about.html</code>, <code>services.html</code> and <code>contact.html</code> — there's no templating layer. Edit one, edit all four. <code>coming-soon.html</code> is intentionally separate and doesn't share this chrome.</p>
+    </section>
+
+    <section class="doc-section" id="design-system">
+      <h2>Design system</h2>
+      <p>Everything lives in CSS custom properties at the top of <code>styles.css</code>. The swatches and type samples below are rendered <em>live</em> from those actual variables and font files — not hand-copied values — so if they ever look wrong, the stylesheet itself changed and this page automatically reflects it.</p>
+
+      <h3 id="colors">Colors</h3>
+      <p>Brand rule: navy + greyscale only. No accent hues, no gradients outside the navy/grey family — this is a client CI constraint, not a style preference, so don't introduce new colors without checking with the client first.</p>
+      <div class="doc-swatches">
+        <div class="doc-swatch"><div class="fill" style="background:var(--navy)"></div><div class="label"><b>navy</b><span>#243655</span></div></div>
+        <div class="doc-swatch"><div class="fill" style="background:var(--navy-deep)"></div><div class="label"><b>navy-deep</b><span>#1a2940</span></div></div>
+        <div class="doc-swatch"><div class="fill" style="background:var(--navy-ink)"></div><div class="label"><b>navy-ink</b><span>#141f30</span></div></div>
+        <div class="doc-swatch"><div class="fill" style="background:var(--silver)"></div><div class="label"><b>silver</b><span>#b9bdc4</span></div></div>
+        <div class="doc-swatch"><div class="fill" style="background:var(--mist)"></div><div class="label"><b>mist</b><span>#f2f3f5</span></div></div>
+        <div class="doc-swatch"><div class="fill" style="background:var(--cloud)"></div><div class="label"><b>cloud</b><span>#e6e8eb</span></div></div>
+        <div class="doc-swatch"><div class="fill" style="background:var(--white);border-bottom:1px solid var(--doc-border)"></div><div class="label"><b>white</b><span>#ffffff</span></div></div>
+        <div class="doc-swatch"><div class="fill" style="background:var(--text-body)"></div><div class="label"><b>text-body</b><span>#42506a</span></div></div>
+        <div class="doc-swatch"><div class="fill" style="background:var(--text-muted)"></div><div class="label"><b>text-muted</b><span>#57647d</span></div></div>
+      </div>
+      <p><code>navy</code> is the client's PANTONE brand color — treat it as fixed. <code>text-muted</code> exists specifically because two earlier greys failed WCAG AA contrast (~3.2:1) — don't reintroduce a lighter grey for body text without checking contrast against its background.</p>
+
+      <h3 id="typography">Typography</h3>
+      <p>Four typefaces, each with a specific, narrow job. None of them are interchangeable — using the wrong one in the wrong place breaks either the brand or the licensing.</p>
+
+      <div class="doc-fontcard">
+        <div class="sample" style="font-family:var(--font-display);font-weight:800">Archivo — headings, nav, buttons</div>
+        <div class="meta"><code>--font-display</code> · Google Fonts, weights 400–800 loaded, used at 600–800 · no licensing constraints</div>
+      </div>
+      <div class="doc-fontcard">
+        <div class="sample" style="font-family:var(--font-body)">Inter — body copy</div>
+        <div class="meta"><code>--font-body</code> · Google Fonts · no licensing constraints</div>
+      </div>
+      <div class="doc-fontcard">
+        <div class="sample" style="font-family:var(--font-script)">Keith &amp; Co.</div>
+        <div class="meta"><code>--font-script</code> · Halo Handletter → Allura → cursive</div>
+        <p style="margin-top:10px">This is the <strong>actual logo font</strong> (confirmed against the client's real logo artwork), used for the "Keith &amp; Co." wordmark and every decorative script accent (hero, page-hero, cta-band, footer). Self-hosted via <code>@font-face</code> from <code>assets/fonts/HaloHandletter.woff2</code>/<code>.woff</code>, sourced from <a href="https://www.dafont.com/halohandletter.font">dafont.com/halohandletter.font</a>.</p>
+        <div class="doc-callout warn"><strong>Licensing</strong>Donationware. Free for non-commercial use; commercial use (this site) asks for a donation to the author via the PayPal address listed on that page. Not yet made as of this writing — worth doing given it's a live commercial site. If the font files are ever deleted, this fails silently and the site falls back to Allura (still loaded via Google Fonts) rather than breaking.</div>
+      </div>
+      <div class="doc-fontcard">
+        <div class="sample" style="font-family:var(--font-wordmark-sub);letter-spacing:.3em;font-size:15px;font-weight:700">CONSULTING</div>
+        <div class="meta"><code>--font-wordmark-sub</code> · Myriad Pro (Adobe Fonts) → Archivo</div>
+        <p style="margin-top:10px">Used <strong>only</strong> for the small "CONSULTING" subtext under the logo (header + footer) — nowhere else. Loaded via an Adobe Fonts (Typekit) web-project kit, linked in the <code>&lt;head&gt;</code> of <code>index/about/services/contact.html</code> as <code>&lt;link rel="stylesheet" href="https://use.typekit.net/lxe2zei.css"&gt;</code>.</p>
+        <div class="doc-callout warn"><strong>Licensing gotcha</strong>The client is on Adobe's <em>free</em> plan, which only includes Myriad Pro Bold (700) and Bold Condensed — not Semibold (600), which the CSS design originally called for. Rather than ask for 600 and let the browser silently substitute the nearest available weight, <code>.brand .name .sub</code> explicitly sets <code>font-weight:700</code> — a deliberate match to what's actually licensed, not an accident. Upgrading to Semibold needs a Creative Cloud subscription; if that ever happens, activate Semibold at <a href="https://fonts.adobe.com/fonts/myriad">fonts.adobe.com/fonts/myriad</a> — the same kit URL picks it up automatically, nothing to relink.</div>
+      </div>
+
+      <h3 id="motif">Diamond motif</h3>
+      <p><span class="doc-dia"></span> A 45°-rotated square, taken directly from the logo mark. Used as list bullets, eyebrow-label markers, social icons, and decorative background shapes (see <code>.about-visual::before/::after</code> in <code>styles.css</code> for an example of the shape used as an oversized background accent). The CSS class is <code>.dia</code>. When adding new bullet points or list markers anywhere on the site, reach for this before reaching for a generic <code>&bull;</code> or browser default marker.</p>
+    </section>
+
+    <section class="doc-section" id="pages">
+      <h2>Pages</h2>
+      <table class="doc-table">
+        <tr><th>Page</th><th>Contains</th></tr>
+        <tr><td><code>index.html</code></td><td>Top bar/header/footer, hero slider (3 slides, CSS-gradient placeholders), stats strip, about teaser + gallery, 7-service grid linking into <code>services.html#<em>slug</em></code>, achievements, client logo carousel, CTA band</td></tr>
+        <tr><td><code>about.html</code></td><td>"Who we are" copy + 3-image gallery, values (single branded image, not a text list — see CLAUDE.md), achievements, client logos</td></tr>
+        <tr><td><code>services.html</code></td><td>7 live service detail sections (each with its own <code>.sd-gallery</code>), each with an "Enquire about this service" CTA linking to <code>contact.html?service=<em>slug</em></code></td></tr>
+        <tr><td><code>contact.html</code></td><td>Enquiry form (Formspree), map/contact details, 2-slide testimonial crossfade</td></tr>
+        <tr><td><code>coming-soon.html</code></td><td>Standalone pre-launch holding page. Own layout, SVG logo lockup instead of the text wordmark, doesn't load Allura, not linked from nav/sitemap/robots — likely used before the real site went live and kept around; confirm with the client before deleting it</td></tr>
+      </table>
+      <p>Service section IDs used for deep-linking (<code>services.html#custom-stands</code> etc.): <code>custom-stands</code>, <code>shell-scheme</code>, <code>project-management</code>, <code>furniture</code>, <code>electrics</code>, <code>audio-visual</code>, <code>marquees</code>. An 8th, <code>xboard</code> (Xboard Stand Design &amp; Build), is fully built but commented out in both <code>index.html</code> and <code>services.html</code> — search for <code>xboard</code> in both files to reactivate it once the client's ready.</p>
+    </section>
+
+    <section class="doc-section" id="js">
+      <h2>JavaScript — <code>js/main.js</code></h2>
+      <p>One file, no bundler, no external libraries by design (see CLAUDE.md — "Vanilla only" is a stated constraint, not an accident). Each feature is a small, independently-guarded block: it checks the relevant element exists before doing anything, so the same file loads on every page without errors even though most blocks only apply to one or two pages.</p>
+      <table class="doc-table">
+        <tr><th>Block</th><th>What it does</th></tr>
+        <tr><td>Footer year</td><td>Fills <code>#yr</code> with <code>new Date().getFullYear()</code></td></tr>
+        <tr><td>Service preselect</td><td>On <code>contact.html?service=<em>slug</em></code>, matches <code>slug</code> against each <code>&lt;option data-slug&gt;</code> in <code>#sv</code> and selects it — this is how the "Enquire about this service" buttons on <code>services.html</code> land on the right dropdown value</td></tr>
+        <tr><td>Hero slider</td><td><code>index.html</code> only. <code>setInterval</code> auto-advance every 6s, dot-click jumps + resets the timer, skips auto-start entirely under <code>prefers-reduced-motion</code></td></tr>
+        <tr><td>Testimonial pause</td><td>See <a href="#testimonials">Testimonials</a> below</td></tr>
+        <tr><td>Mobile menu</td><td>Toggles <code>.open</code> on <code>#mainnav</code> and the toggle button, syncs <code>aria-expanded</code>, adds <code>.nav-open</code> to <code>&lt;body&gt;</code>; closing on nav-link click keeps it from staying open after navigation</td></tr>
+        <tr><td>Active nav</td><td>Compares <code>location.pathname</code>'s basename against each <code>nav.main a[href]</code> and adds <code>.active</code> — no page needs to hand-mark itself active</td></tr>
+        <tr><td>Scroll reveal</td><td><code>IntersectionObserver</code> (threshold 0.12) adds <code>.in</code> to any <code>.reveal</code> element once it's ~12% visible, then unobserves it — one-shot, not re-triggered on scroll-up</td></tr>
+        <tr><td>Enquiry form</td><td>See <a href="#forms">Contact form</a> below</td></tr>
+      </table>
+      <div class="doc-callout ok"><strong>Convention</strong>New interactive features should follow this same pattern: a guarded block, a short comment explaining <em>why</em> (not what — the code already says what), and respect for <code>prefers-reduced-motion</code> wherever animation is involved.</div>
+    </section>
+
+    <section class="doc-section" id="galleries">
+      <h2>Image galleries</h2>
+      <p>Two visually different components, same underlying mechanism:</p>
+      <ul>
+        <li><code>.about-visual .gallery</code> — the "about teaser" gallery on <code>index.html</code> and the "who we are" gallery on <code>about.html</code></li>
+        <li><code>.sd-media .sd-gallery</code> — one per service line on <code>services.html</code></li>
+      </ul>
+      <p>Both are a fixed <code>aspect-ratio:3/2</code> box containing stacked <code>.g-slide</code> divs, each with an inline <code>background-image:url(...)</code>. They crossfade via a <code>galleryFade</code> keyframe (opacity + a subtle <code>scale(1.04)→scale(1)</code> Ken Burns drift) with staggered <code>animation-delay</code> per slide.</p>
+      <pre><code>&lt;div class="gallery"&gt;
+  &lt;div class="g-slide" style="background-image:url('assets/images/example-1.jpg')"&gt;&lt;/div&gt;
+  &lt;div class="g-slide" style="background-image:url('assets/images/example-2.jpg')"&gt;&lt;/div&gt;
+  &lt;div class="g-slide" style="background-image:url('assets/images/example-3.jpg')"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      <p>The default timing (no modifier class) is tuned for exactly <strong>4</strong> slides. For any other count, add a modifier class so the crossfade cycles evenly:</p>
+      <table class="doc-table">
+        <tr><th>Slide count</th><th>Class</th><th>Cycle duration</th></tr>
+        <tr><td>2</td><td><code>gallery-2</code></td><td>10s</td></tr>
+        <tr><td>3</td><td><code>gallery-3</code></td><td>15s</td></tr>
+        <tr><td>4</td><td><em>(none needed)</em></td><td>20s</td></tr>
+        <tr><td>5</td><td><code>gallery-5</code></td><td>25s</td></tr>
+      </table>
+      <p>Changing slide count without updating this class doesn't break anything visibly obvious — the crossfade just paces unevenly (e.g. a gap where no slide is visible, or two overlapping). Easy to miss in review.</p>
+
+      <h3 id="gallery-gotcha">The recurring gotcha (hit twice already — read this before touching a gallery)</h3>
+      <div class="doc-callout warn">
+        <strong>Two separate failure modes, same symptom: "the image isn't showing right"</strong>
+        <p style="margin:8px 0 0">
+        <strong>1. Cropping.</strong> <code>background-size:cover</code> fills the fixed 3:2 box by cropping whatever doesn't fit. Source photos close to a 1.5 aspect ratio look untouched; a 16:9 photo (1.78) or a repurposed social-card crop (1200×630, 1.9) loses 15–20%+ off each side. This has happened twice: once from reusing an Open Graph card crop as a gallery slide, once from a naturally panoramic photo. Fix, in order of preference:
+        </p>
+        <ol style="margin-top:8px">
+          <li>Check <code>assets/images/_originals/</code> for a full-resolution master and resize/crop <em>that</em> to ~3:2, instead of reusing an already-cropped derivative.</li>
+          <li>If no better source exists, override just that slide's inline style with <code>background-size:contain;background-color:var(--navy-deep)</code> — this letterboxes the full image instead of cropping it. Precedent: the electrics and shell-build-2 slides on <code>services.html</code>.</li>
+        </ol>
+        <p><strong>2. Broken references.</strong> <code>background-image:url(...)</code> failures are silent — no broken-image icon, nothing in the rendered page, just an empty slide. This happens whenever a replacement photo is saved under a different filename or extension (<code>.jpg</code> → <code>.jpeg</code> is the recurring one) without updating the HTML, or when a slide count changes (an image added or removed) without updating the <code>gallery-N</code> class. Always grep the new filename against the HTML before assuming a swap is done.</p>
+      </div>
+    </section>
+
+    <section class="doc-section" id="testimonials">
+      <h2>Testimonials — <code>contact.html</code></h2>
+      <p><code>.t-stage</code> crossfades <code>.t-slide</code> children, tuned specifically for <strong>2</strong> slides (7s/14s stagger) — not the general-purpose <code>gallery-N</code> system above, this one's bespoke. A <code>:only-child</code> rule renders statically (no animation) if there's ever just one testimonial.</p>
+      <pre><code>&lt;div class="t-stage reveal"&gt;
+  &lt;div class="t-slide"&gt;
+    &lt;div class="stars" aria-label="5 out of 5 stars"&gt;★★★★★&lt;/div&gt;
+    &lt;div class="t-text"&gt;
+      &lt;p&gt;Quote text…&lt;/p&gt;
+      &lt;!-- more &lt;p&gt; tags here are fine — .t-text handles multi-paragraph quotes --&gt;
+    &lt;/div&gt;
+    &lt;div class="who"&gt;
+      &lt;img class="t-logo" src="assets/logos/client-x.jpg" alt="Client name"&gt;
+      &lt;strong&gt;Person — Title, Company&lt;/strong&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- second .t-slide … --&gt;
+&lt;/div&gt;</code></pre>
+      <p><strong>Click/tap to pause:</strong> clicking anywhere on <code>.t-stage</code>, or focusing it and pressing Enter/Space, toggles a <code>.paused</code> class that sets <code>animation-play-state:paused</code> on <em>both</em> slides at once — pausing only the clicked slide would desync the alternation. A small "Paused — click to resume" label appears via CSS (<code>::after</code>) while paused. This is wired up in <code>main.js</code> only when there's more than one <code>.t-slide</code>, so it's a no-op with a single testimonial.</p>
+      <p><strong>Consistent height + "Read more":</strong> every quote lives in a <code>.t-text</code> wrapper clamped to <code>max-height:100px</code>, so short and long testimonials present at the same size instead of one dwarfing the other. On page load (after <code>document.fonts.ready</code>, so measurements use final font metrics, not a fallback font), <code>main.js</code> checks each slide's <code>scrollHeight</code> against its clamped <code>clientHeight</code> — only where the real content is taller does it tag <code>.t-text</code> with <code>.has-more</code> (which is what turns on the bottom fade-out) and inject a "Read more" button. Clicking it sets <code>max-height</code> to the text's true <code>scrollHeight</code> for a clean expand, and force-pauses <code>.t-stage</code> so it can't crossfade away mid-read. This re-measures per page load at the current viewport, so the same testimonial can render fully on desktop and get a "Read more" on a narrower mobile width where it wraps to more lines — that's expected, not a bug.</p>
+      <div class="doc-callout warn"><strong>Adding a 3rd testimonial</strong>Isn't automatic like the gallery system — <code>.t-stage</code>'s timing is hardcoded for 2. You'd need a new <code>nth-child(3)</code> delay rule and a recalculated <code>testiFade</code> duration/percentage split in <code>styles.css</code>.</div>
+      <div class="doc-callout warn"><strong>Box height tracks content, not a magic number</strong><code>.t-stage</code> used to be a fixed <code>min-height:320px</code> with <code>.t-slide</code> absolutely positioned inside it — since absolutely-positioned children don't stretch their parent, this worked only by luck for short quotes and silently overflowed the first time a much longer testimonial (Batseta's full letter) was added. Fixed by making <code>.t-stage</code> a CSS grid with every <code>.t-slide</code> sharing <code>grid-area:1/1</code> — grid auto-sizes the shared cell to the tallest child, so the box always fits whatever text is actually there. If you ever need go back to independently-positioned slides for some reason, re-add an explicit height budget generous enough for your longest realistic quote, not a number that merely fit whatever existed at the time.</div>
+      <div class="doc-callout warn"><strong>Don't fade what isn't hidden</strong>The <code>.t-text::after</code> fade-out is scoped to <code>.t-text.has-more</code>, not the base class — an early version applied it unconditionally based on the box being near its clamp height, which falsely implied hidden content on a testimonial that simply filled the box exactly. Also watch <code>z-index</code> here: <code>.t-slide p</code> has <code>z-index:1</code> (to sit above the decorative <code>::before</code> quote mark), which will silently paint over the fade overlay unless the fade itself has a higher <code>z-index</code> — it does (<code>2</code>), but if you touch this again and the fade stops showing, that stacking order is the first thing to check.</div>
+      <p>Only include the <code>.stars</code> row when the source material actually was a star rating. One existing testimonial (Batseta) is a formal signed recommendation letter, not a star review, so it's rendered without stars — adding them would misrepresent something the client never gave.</p>
+    </section>
+
+    <section class="doc-section" id="forms">
+      <h2>Contact form</h2>
+      <p><code>form.enquiry</code> on <code>contact.html</code> posts to <a href="https://formspree.io">Formspree</a>. Current endpoint:</p>
+      <pre><code>&lt;form class="enquiry reveal" action="https://formspree.io/f/xzepgqwg" method="POST"&gt;</code></pre>
+      <p>This has already been changed twice as the client set up and re-set-up their Formspree form — expect it to happen again. It's a one-line edit: just swap the <code>action</code> URL, nothing else in the form or in <code>main.js</code> needs to change, since the JS reads <code>form.action</code> dynamically rather than hardcoding it.</p>
+      <ul>
+        <li><code>_gotcha</code> — hidden honeypot field, spam trap (leave it alone, don't remove it)</li>
+        <li><code>_subject</code> — hidden field setting the email subject line Formspree sends</li>
+        <li><code>#sv</code> — service dropdown, auto-preselected via the <code>?service=</code> query param (see <a href="#js">JavaScript</a>)</li>
+      </ul>
+      <p><code>main.js</code> intercepts <code>submit</code> and does a <code>fetch()</code> POST with <code>Accept: application/json</code> for an inline success/error message (<code>.form-note</code>, toggling <code>.is-success</code>/<code>.is-error</code>) instead of a page redirect. This is progressive enhancement, not a replacement for the plain form — the <code>action</code>/<code>method</code> attributes still work correctly (via Formspree's own redirect) if JavaScript fails to load.</p>
+    </section>
+
+    <section class="doc-section" id="seo">
+      <h2>SEO &amp; meta</h2>
+      <p>Open Graph and Twitter Card tags are in the <code>&lt;head&gt;</code> of all four main pages. <code>sitemap.xml</code> and <code>robots.txt</code> live at the site root and list the same four pages (not <code>coming-soon.html</code>).</p>
+      <div class="doc-callout warn"><strong>Currently broken</strong><code>og:image</code>/<code>twitter:image</code> point at <code>assets/images/og-cover.jpg</code>, which doesn't exist on disk (deleted at some point — check <code>git log</code> on that path). Until it's restored or the meta tags are repointed at a different image, link previews on Slack/social platforms will show no image. See CLAUDE.md for current status — this may already be resolved by the time you're reading this.</div>
+    </section>
+
+    <section class="doc-section" id="run-deploy">
+      <h2>Run &amp; deploy</h2>
+      <h3>Local</h3>
+      <p>No build step. From inside this folder:</p>
+      <pre><code>npx serve .
+# or
+python3 -m http.server 8000</code></pre>
+      <p>Opening <code>index.html</code> directly (double-click, <code>file://</code>) also works for quick checks, but a real server behaves more like production for relative paths.</p>
+      <h3>Deploy</h3>
+      <p>Any static host works — there's no <code>netlify.toml</code> or equivalent build config in this repo, meaning whichever host is used just needs "no build command, publish directory = repo root." README.md lists Netlify, Vercel, and Cloudflare Pages as known-good options with zero configuration.</p>
+    </section>
+
+    <section class="doc-section" id="git">
+      <h2>Git</h2>
+      <div class="doc-callout warn"><strong>Nesting quirk</strong>This <code>keithandco-site/</code> folder is its own git repository. If it lives inside a parent folder that is <em>not</em> itself a git repo (as it did during this handoff), make sure your terminal/IDE is scoped to <em>this</em> folder before running git commands — running them one level up will silently do nothing or target the wrong repo.</div>
+    </section>
+
+    <section class="doc-section" id="known-issues">
+      <h2>Known issues</h2>
+      <p>This is a snapshot at the time of writing. <strong>CLAUDE.md's "Outstanding TODOs" section is the current, actively-maintained list</strong> — check there first, this is just context for why these particular things are open.</p>
+      <table class="doc-table">
+        <tr><th>Issue</th><th>Detail</th></tr>
+        <tr><td>Hero photography</td><td>Still CSS-only navy gradients with geometric textures, standing in for real photos on the 3 hero slides</td></tr>
+        <tr><td>Janus Henderson logo</td><td>Only available as <code>.eps</code>, unusable on the web — needs a PNG/JPG/SVG from the client</td></tr>
+        <tr><td>og-cover.jpg missing</td><td>See <a href="#seo">SEO &amp; meta</a> above</td></tr>
+        <tr><td>Deploy bloat</td><td><code>assets/logos/company_logos/</code> plus a growing set of <code>*-remove*.jpg</code> files in <code>assets/images/</code> (background-removed variants, not yet referenced by any page) — worth excluding from deploy or cleaning up once their purpose is confirmed</td></tr>
+        <tr><td>Halo Handletter donation</td><td>Not yet made — see <a href="#typography">Typography</a></td></tr>
+        <tr><td>Myriad Pro Semibold</td><td>Blocked on a Creative Cloud subscription decision, currently shipping on Bold deliberately — see <a href="#typography">Typography</a></td></tr>
+      </table>
+    </section>
+
+  </main>
+</div>
+
+</body>
+</html>

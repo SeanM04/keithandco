@@ -3,6 +3,20 @@
    CI: Navy #243655 (PANTONE), greyscale gradient, white. Diamond motif.
    ========================================================================== */
 
+/* Halo Handletter — actual logo script font, self-hosted from
+   assets/fonts/HaloHandletter.woff2/.woff. Donationware; commercial use
+   requires a donation to the author, see dafont.com/halohandletter.font
+   (not yet made). If those files are ever missing, this rule fails
+   silently and --font-script falls back to Allura below. */
+@font-face{
+  font-family:'Halo Handletter';
+  src:url('../assets/fonts/HaloHandletter.woff2') format('woff2'),
+      url('../assets/fonts/HaloHandletter.woff') format('woff');
+  font-weight:normal;
+  font-style:normal;
+  font-display:swap;
+}
+
 :root{
   --navy:#243655;
   --navy-deep:#1a2940;
@@ -16,7 +30,12 @@
   --shadow:0 18px 45px rgba(20,31,48,.18);
   --font-display:'Archivo',sans-serif;
   --font-body:'Inter',sans-serif;
-  --font-script:'Allura',cursive;
+  --font-script:'Halo Handletter','Allura',cursive;
+  /* Myriad Pro loads via Adobe Fonts web embed (see <head>). Free plan only
+     includes Bold — .sub below is set to font-weight:700 to match on
+     purpose rather than relying on browser weight substitution. Falls back
+     to Archivo if the kit is ever unreachable. */
+  --font-wordmark-sub:'myriad-pro','Archivo',sans-serif;
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
@@ -65,7 +84,7 @@ header.site .wrap{display:flex;align-items:center;justify-content:space-between;
 .brand .mark{width:72px;height:auto;flex:none}
 .brand .name{display:flex;flex-direction:column;line-height:1.05}
 .brand .name .script{font-family:var(--font-script);font-size:34px;color:var(--navy);transform:translateY(2px)}
-.brand .name .sub{font-family:var(--font-display);font-size:11px;letter-spacing:.5em;color:var(--text-muted);font-weight:600;margin-top:5px}
+.brand .name .sub{font-family:var(--font-wordmark-sub);font-size:11px;letter-spacing:.5em;color:var(--text-muted);font-weight:700;margin-top:5px}
 nav.main{display:flex;gap:30px;align-items:center}
 nav.main a{font-family:var(--font-display);font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#3c4a63;position:relative;padding:6px 0}
 nav.main a::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:2px;background:var(--navy);transition:right .25s ease}
@@ -278,19 +297,35 @@ nav.main a.active{color:var(--navy)}
 
 /* ---------- testimonials ---------- */
 .testi{background:var(--mist)}
-.t-stage{position:relative;margin-top:44px;min-height:320px}
-.t-slide{position:absolute;inset:0;background:var(--white);padding:32px 34px;opacity:0;animation:testiFade 14s infinite}
+.t-stage{position:relative;margin-top:44px;display:grid}
+.t-stage.interactive{cursor:pointer}
+.t-stage.paused .t-slide{animation-play-state:paused}
+.t-slide{grid-area:1/1;position:relative;background:var(--white);padding:32px 34px;opacity:0;animation:testiFade 14s infinite}
 .t-slide:nth-child(1){animation-delay:0s}
 .t-slide:nth-child(2){animation-delay:7s}
-@keyframes testiFade{0%{opacity:0}4%{opacity:1}46%{opacity:1}50%{opacity:0}100%{opacity:0}}
+@keyframes testiFade{
+  0%{opacity:0;transform:translateY(16px)}
+  4%{opacity:1;transform:translateY(0)}
+  46%{opacity:1;transform:translateY(0)}
+  50%{opacity:0;transform:translateY(-16px)}
+  100%{opacity:0;transform:translateY(-16px)}
+}
 @media(prefers-reduced-motion: reduce){
   .t-slide{animation:none;opacity:0}
-  .t-slide:first-child{opacity:1;position:relative}
+  .t-slide:first-child{opacity:1}
+  .t-text{transition:none}
 }
-.t-slide:only-child{position:relative;opacity:1;animation:none}
+.t-slide:only-child{opacity:1;animation:none}
 .t-slide::before{content:"\201D";font-family:var(--font-display);font-size:76px;font-weight:800;color:var(--cloud);position:absolute;top:2px;right:20px;line-height:1}
+.t-stage.paused .t-slide::after{content:"Paused — click to resume";position:absolute;bottom:14px;right:20px;font-family:var(--font-display);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted)}
 .t-slide .stars{color:var(--navy);letter-spacing:.2em;font-size:15px;margin-bottom:14px}
+.t-text{position:relative;max-height:100px;overflow:hidden;transition:max-height .35s ease}
+.t-text.has-more::after{content:"";position:absolute;left:0;right:0;bottom:0;height:34px;background:linear-gradient(transparent,var(--white));z-index:2}
+.t-slide.expanded .t-text.has-more::after{opacity:0}
 .t-slide p{color:var(--text-body);font-size:15px;position:relative;z-index:1}
+.t-slide p + p{margin-top:12px}
+.t-more{display:inline-block;margin-top:12px;background:none;border:0;padding:0;font-family:var(--font-display);font-size:12px;font-weight:700;letter-spacing:.04em;color:var(--navy);cursor:pointer;text-decoration:underline;text-underline-offset:3px;position:relative;z-index:1}
+.t-more:hover, .t-more:focus-visible{color:var(--navy-deep)}
 .t-slide .who{margin-top:18px;display:flex;align-items:center;gap:12px}
 .t-slide .who .dia{width:9px;height:9px;background:var(--navy);flex:none}
 .t-slide .who .t-logo{height:30px;width:auto;max-width:120px;object-fit:contain;flex:none}
@@ -347,7 +382,7 @@ footer.site ul{list-style:none}
 footer.site li{margin-bottom:9px}
 footer.site a:hover{color:var(--white)}
 .f-brand .script{font-family:var(--font-script);font-size:30px;color:var(--white)}
-.f-brand .sub{font-family:var(--font-display);font-size:9px;letter-spacing:.5em;color:var(--silver);margin-top:2px}
+.f-brand .sub{font-family:var(--font-wordmark-sub);font-size:9px;letter-spacing:.5em;color:var(--silver);margin-top:2px}
 .f-brand p{margin-top:14px;max-width:36ch}
 .social{display:flex;gap:12px;margin-top:18px}
 .social a{width:36px;height:36px;border:1px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;transform:rotate(45deg);transition:background .2s}
