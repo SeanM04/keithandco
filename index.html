@@ -8,53 +8,286 @@
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --navy:#243655; --deep-navy:#1a2940; --ink:#141f30;
-    --silver:#b9bdc4; --mist:#f2f3f5; --white:#fff;
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
-    background:linear-gradient(135deg,var(--deep-navy),var(--navy) 60%,#2c4468);
-    font-family:'Inter',sans-serif; color:var(--white); text-align:center; overflow:hidden;
-    position:relative;
-  }
-  .diamonds{position:absolute; inset:0; z-index:0; pointer-events:none}
-  .diamonds div{position:absolute; width:420px; height:420px; will-change:transform}
-  .d1{left:-180px; top:10%; border:2px solid rgba(255,255,255,.14); transform:rotate(45deg); animation:drift1 12s ease-in-out infinite}
-  .d2{right:-160px; bottom:5%; background:rgba(185,189,196,.10); transform:rotate(45deg); animation:drift2 9s ease-in-out infinite}
-  @keyframes drift1{0%,100%{transform:rotate(45deg) translate(0,0)}50%{transform:rotate(45deg) translate(20px,-20px)}}
-  @keyframes drift2{0%,100%{transform:rotate(45deg) translate(0,0)}50%{transform:rotate(45deg) translate(-18px,18px)}}
-
-  .content{position:relative; z-index:1; padding:40px 24px; max-width:640px}
-  .lockup{width:200px; margin:0 auto; display:block}
-  h1{font-family:'Archivo',sans-serif; font-weight:800; font-size:clamp(26px,4vw,38px); margin:36px 0 14px; letter-spacing:-.01em}
-  p.lede{font-size:16px; color:var(--silver); line-height:1.6; margin:0 auto 30px; max-width:46ch}
-  .contact{display:flex; gap:28px; justify-content:center; flex-wrap:wrap; font-family:'Archivo',sans-serif; font-size:13px; letter-spacing:.06em}
-  .contact a{color:var(--white); text-decoration:none; border-bottom:1px solid rgba(255,255,255,.35); padding-bottom:2px}
-  .contact a:hover{border-color:var(--white)}
-  @media(prefers-reduced-motion: reduce){ .diamonds div{animation:none} }
-  @media(max-width:560px){ .diamonds div{width:280px;height:280px} .contact{flex-direction:column; gap:14px} }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=Allura&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.typekit.net/lxe2zei.css">
+<link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <div class="diamonds" aria-hidden="true"><div class="d1"></div><div class="d2"></div></div>
-  <div class="content">
-    <svg class="lockup" viewBox="0 0 444.76 623.62" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Keith &amp; Co. Consulting">
-      <path d="M197.53,419.75 L222.38,444.76 L444.76,222.38 L222.38,0.00 L197.53,24.88 L197.53,419.75 Z" fill="#ffffff"/>
-      <path d="M264.75,219.1 L375.82,360.67 L302.97,360.67 L197.53,222.31 L197.53,419.75 L140.38,362.76 L140.38,82.00 L197.53,24.88 L197.53,216.70 L306.60,83.55 L375.02,83.55 L264.75,219.10 Z" fill="#243655"/>
-      <path d="M140.38,82.0 L140.38,362.76 L0.00,222.38 L140.38,82.00 Z" fill="#b9bdc4"/>
-      <path d="M82.19,484.59 C82.71,484.33 83.20,484.03 83.61,483.76 C84.07,483.57 84.48,483.46 84.90,483.42 C85.31,483.38 85.61,483.50 85.87,483.76 C86.33,484.33 86.48,484.89 86.29,485.49 C86.18,485.83 86.10,486.10 86.02,486.28 C83.20,489.11 80.08,492.08 76.73,495.20 C73.90,497.88 70.59,500.81 66.79,504.09 C62.99,507.36 58.85,510.56 54.41,513.65 C48.04,518.28 42.25,522.16 37.02,525.36 C31.78,528.55 27.83,530.89 25.08,532.39 C34.45,536.53 42.21,540.34 48.31,543.84 C54.41,547.34 59.26,550.39 62.91,552.95 C67.17,555.96 70.33,558.71 72.47,561.19 C72.92,561.72 73.34,562.17 73.68,562.51 C74.28,563.49 74.32,564.20 73.79,564.65 C73.45,564.99 73.04,565.11 72.62,564.92 C72.17,564.73 71.72,564.50 71.27,564.24 C70.74,563.90 70.21,563.49 69.69,563.04 C64.12,559.16 58.51,555.43 52.82,551.89 C47.97,548.88 42.66,545.91 36.90,542.97 C31.14,540.07 25.68,537.85 20.56,536.35 C20.45,538.94 20.41,541.58 20.41,544.25 C20.41,546.96 20.41,549.52 20.41,551.89 C20.41,554.26 20.45,556.37 20.56,558.14 C20.64,559.91 20.68,561.19 20.68,561.98 C20.87,563.60 20.68,564.47 20.15,564.58 C19.62,564.69 18.87,564.65 17.89,564.39 C16.91,564.13 16.24,563.71 15.86,563.19 C15.45,562.66 15.26,562.17 15.26,561.72 C15.07,560.66 14.96,559.38 14.84,557.88 C14.73,556.64 14.65,555.13 14.58,553.29 C14.47,551.48 14.47,549.41 14.58,547.11 C14.65,545.34 14.73,543.54 14.84,541.62 C14.96,539.70 15.07,537.66 15.26,535.44 C12.32,535.44 10.25,535.18 9.05,534.62 C7.88,534.09 7.39,532.96 7.65,531.19 C7.84,530.21 8.71,529.38 10.18,528.71 C11.68,528.07 13.60,528.03 15.90,528.67 L16.16,524.68 C16.42,520.43 16.91,516.10 17.59,511.65 C18.23,507.25 18.95,503.18 19.70,499.46 C20.45,495.73 21.13,492.65 21.69,490.20 C22.26,487.75 22.60,486.47 22.67,486.28 C22.86,484.78 23.24,484.17 23.80,484.44 C24.37,484.70 25.08,485.12 25.87,485.64 C27.04,486.36 27.53,487.04 27.34,487.75 C27.15,488.47 27.08,488.84 27.08,488.96 C26.29,492.95 25.46,497.12 24.67,501.45 C23.95,505.18 23.27,509.40 22.63,514.10 C21.96,518.84 21.43,523.70 21.09,528.67 C24.97,526.71 28.85,524.57 32.65,522.27 C36.45,519.97 40.14,517.64 43.71,515.19 C47.29,512.75 50.75,510.34 54.10,507.89 C57.42,505.44 60.50,503.07 63.33,500.78 C70.06,495.47 76.39,490.05 82.30,484.59 L82.19,484.59 Z M77.93,542.48 C78.27,541.39 78.65,540.34 78.99,539.28 C79.32,538.23 79.55,537.25 79.66,536.35 C79.74,535.48 79.70,534.73 79.51,534.09 C79.32,533.49 78.95,533.15 78.31,533.03 C77.59,532.96 76.80,533.56 75.94,534.84 C75.07,536.12 74.24,537.74 73.49,539.74 C72.74,541.73 72.17,543.88 71.80,546.17 C71.46,548.47 71.49,550.58 71.95,552.42 C72.92,551.18 74.02,549.64 75.18,547.72 C76.39,545.80 77.29,544.06 77.93,542.48 Z M79.4,558.26 C81.77,558.26 83.96,557.62 85.91,556.33 C87.83,555.06 89.60,553.51 91.14,551.71 C92.69,549.90 94.04,548.02 95.21,546.06 C96.34,544.10 97.32,542.41 98.11,541.01 C98.37,540.49 98.71,540.26 99.05,540.34 C99.39,540.45 99.65,540.79 99.76,541.35 C99.88,541.92 99.88,542.71 99.69,543.73 C99.50,544.74 99.09,545.95 98.37,547.26 C98.11,547.68 97.54,548.77 96.60,550.50 C95.66,552.23 94.38,554.04 92.80,555.88 C91.18,557.73 89.34,559.38 87.23,560.85 C85.08,562.32 82.79,563.04 80.30,563.04 C77.29,562.96 74.88,562.36 73.11,561.27 C71.34,560.17 70.03,558.78 69.09,557.13 C68.14,555.51 67.54,553.70 67.28,551.74 C67.01,549.82 66.94,547.94 67.05,546.17 C67.13,544.40 67.58,542.33 68.37,539.92 C69.16,537.55 70.18,535.37 71.42,533.37 C72.66,531.38 74.09,529.95 75.79,529.01 C77.48,528.07 79.21,528.18 80.98,529.31 C82.37,530.21 83.28,531.27 83.69,532.43 C84.10,533.64 84.22,534.92 84.03,536.23 C83.84,537.55 83.50,538.91 82.97,540.26 C82.45,541.66 81.96,542.90 81.51,544.06 C80.45,546.81 79.21,549.26 77.82,551.48 C76.39,553.70 75.18,555.39 74.21,556.56 C75.52,557.69 77.25,558.26 79.40,558.26 Z M99.54,524.94 C100.97,525.13 101.83,525.77 102.10,526.86 C102.36,527.95 102.47,528.97 102.47,529.87 C102.40,530.74 101.87,531.49 100.89,532.09 C99.92,532.73 99.09,532.96 98.37,532.77 C97.13,532.51 96.34,531.98 96.04,531.19 C95.74,530.40 95.59,529.65 95.59,528.93 C95.66,528.29 96.00,527.43 96.64,526.34 C97.28,525.24 98.30,524.72 99.69,524.79 L99.54,524.94 Z M124.12,547.11 C123.86,547.56 123.22,548.66 122.27,550.35 C121.30,552.08 120.02,553.89 118.47,555.81 C116.93,557.73 115.12,559.42 113.09,560.93 C111.06,562.43 108.84,563.19 106.46,563.19 C103.90,563.19 101.87,562.55 100.37,561.27 C98.86,559.99 97.69,558.52 96.90,556.82 C96.11,555.13 95.62,553.51 95.44,551.89 C95.25,550.31 95.21,549.22 95.32,548.58 C95.40,548.05 95.51,547.26 95.66,546.25 C95.77,545.23 95.92,544.25 96.11,543.27 C96.30,542.11 96.45,540.94 96.64,539.70 C96.90,539.06 97.28,538.61 97.84,538.34 C98.37,538.08 98.94,537.97 99.50,538.00 C100.07,538.04 100.59,538.23 101.04,538.53 C101.46,538.87 101.68,539.32 101.68,539.96 C101.68,540.04 101.57,540.56 101.35,541.58 C101.12,542.60 100.93,543.84 100.74,545.23 C100.55,546.66 100.48,548.21 100.48,549.82 C100.48,551.48 100.67,552.99 101.01,554.30 C101.35,555.62 102.02,556.75 103.00,557.62 C103.98,558.48 105.30,558.90 106.99,558.82 C108.76,558.71 110.49,557.99 112.19,556.67 C113.88,555.36 115.42,553.78 116.89,551.97 C118.36,550.16 119.64,548.24 120.81,546.25 C121.97,544.25 122.91,542.56 123.70,541.13 C123.97,540.53 124.31,540.23 124.65,540.26 C124.98,540.30 125.25,540.64 125.40,541.20 C125.51,541.77 125.51,542.56 125.32,543.57 C125.13,544.59 124.76,545.80 124.12,547.11 Z M149.75,547.53 C149.49,547.94 148.96,548.92 148.17,550.42 C147.38,551.93 146.25,553.47 144.86,555.06 C143.43,556.67 141.70,558.07 139.67,559.31 C137.63,560.55 135.30,561.12 132.63,560.93 C130.14,560.85 128.19,560.10 126.79,558.67 C125.36,557.28 124.31,555.55 123.67,553.55 C122.99,551.55 122.58,549.45 122.39,547.23 C122.20,545.01 122.16,543.08 122.28,541.39 C122.28,540.34 122.43,538.87 122.69,536.95 C122.95,535.03 123.25,532.92 123.59,530.55 C123.93,528.22 124.31,525.81 124.72,523.32 C125.13,520.88 125.51,518.54 125.85,516.32 L105.26,516.32 C104.47,516.32 103.79,516.25 103.26,516.06 C102.85,515.87 102.44,515.64 102.02,515.38 C101.61,515.12 101.42,514.74 101.42,514.33 C101.42,513.61 101.65,513.16 102.14,512.93 C102.63,512.71 103.19,512.56 103.79,512.45 C104.51,512.37 105.34,512.41 106.20,512.59 L126.53,512.45 C126.79,510.86 126.98,509.58 127.17,508.61 C127.36,507.63 127.47,507.10 127.58,507.02 C127.77,505.86 128.03,505.03 128.37,504.50 C128.71,503.98 129.43,503.90 130.52,504.24 C131.12,504.43 131.61,505.03 131.95,506.08 C132.29,507.14 132.44,507.97 132.36,508.61 L131.95,512.59 L152.95,512.45 C153.56,512.37 154.08,512.37 154.53,512.45 C154.99,512.56 155.36,512.71 155.66,512.93 C155.97,513.16 156.11,513.54 156.11,514.06 C156.04,514.67 155.78,515.12 155.36,515.38 C154.91,515.64 154.42,515.87 153.86,516.06 C153.25,516.25 152.54,516.32 151.75,516.32 L131.31,516.32 C131.12,517.49 130.97,518.69 130.78,520.01 C130.59,521.33 130.41,522.76 130.22,524.26 C130.14,524.90 129.95,526.03 129.65,527.65 C129.31,529.31 128.97,531.08 128.64,532.92 C128.30,534.77 127.96,536.57 127.66,538.34 C127.32,540.11 127.13,541.47 127.06,542.33 C126.94,543.31 126.98,544.55 127.13,546.10 C127.24,547.64 127.51,549.22 127.92,550.76 C128.33,552.31 128.94,553.70 129.80,554.87 C130.63,556.07 131.72,556.71 133.04,556.82 C135.07,557.01 136.92,556.56 138.61,555.47 C140.31,554.42 141.81,553.06 143.13,551.44 C144.45,549.82 145.65,548.09 146.67,546.25 C147.68,544.44 148.55,542.82 149.34,541.39 C149.60,540.86 149.94,540.64 150.28,540.71 C150.62,540.83 150.88,541.13 151.03,541.66 C151.15,542.22 151.15,542.97 150.96,543.99 C150.77,545.01 150.39,546.21 149.75,547.53 Z M189.16,547.26 C188.90,547.68 188.30,548.81 187.32,550.61 C186.34,552.46 185.10,554.34 183.56,556.33 C182.01,558.33 180.17,560.17 178.02,561.79 C175.88,563.41 173.58,564.28 171.13,564.39 C168.54,564.47 166.58,563.98 165.22,562.92 C163.83,561.87 162.85,560.55 162.25,558.93 C161.61,557.35 161.27,555.62 161.24,553.70 C161.20,551.78 161.24,550.01 161.38,548.35 C161.50,546.74 161.65,545.38 161.84,544.33 C162.03,543.27 161.95,542.71 161.69,542.60 C161.16,542.52 160.37,543.42 159.31,545.27 C158.22,547.11 157.13,549.18 156.04,551.48 C154.95,553.78 153.97,555.96 153.14,557.99 C152.28,560.06 151.86,561.19 151.86,561.45 C151.86,562.51 151.60,563.19 151.07,563.49 C150.55,563.83 149.94,563.90 149.30,563.71 C148.62,563.53 147.99,563.19 147.35,562.66 C146.71,562.13 146.37,561.45 146.29,560.66 C145.95,559.16 145.84,557.24 145.95,554.87 C146.06,552.53 146.29,550.28 146.55,548.09 C146.82,545.95 147.12,544.03 147.42,542.41 C147.72,540.79 147.87,539.96 147.87,539.96 C147.87,538.19 147.95,536.12 148.14,533.83 C148.32,531.79 148.51,529.31 148.70,526.34 C148.89,523.36 149.19,519.90 149.60,515.91 C150.39,507.85 151.75,501.53 153.59,496.97 C155.44,492.42 157.66,490.20 160.22,490.27 C160.56,490.27 161.16,490.39 161.95,490.65 C162.74,490.91 163.53,491.40 164.28,492.04 C165.04,492.72 165.64,493.62 166.09,494.79 C166.51,495.96 166.62,497.43 166.35,499.19 C166.17,500.44 165.83,501.98 165.30,503.82 C164.74,505.67 164.13,507.70 163.42,509.92 C162.70,512.14 161.95,514.48 161.12,516.92 C160.26,519.37 159.43,521.70 158.64,524.00 C156.68,529.50 154.50,535.29 152.13,541.39 L151.18,554.68 C152.43,551.33 153.74,548.32 155.06,545.64 C156.23,543.35 157.47,541.28 158.86,539.40 C160.22,537.55 161.61,536.61 163.00,536.61 C164.89,536.61 166.13,536.91 166.69,537.55 C167.26,538.19 167.52,538.98 167.48,540.00 C167.45,541.01 167.22,542.14 166.81,543.39 C166.39,544.63 166.17,545.83 166.09,547.00 C165.98,547.87 165.94,549.03 165.94,550.42 C165.94,551.86 166.09,553.25 166.43,554.57 C166.73,555.88 167.29,557.05 168.09,558.07 C168.88,559.08 170.01,559.61 171.51,559.61 C173.47,559.61 175.31,558.90 177.04,557.46 C178.74,556.07 180.36,554.34 181.86,552.35 C183.37,550.35 184.69,548.32 185.85,546.25 C187.02,544.18 188.00,542.41 188.79,541.01 C189.05,540.49 189.35,540.26 189.73,540.34 C190.07,540.45 190.33,540.79 190.45,541.35 C190.56,541.92 190.56,542.71 190.37,543.73 C190.18,544.74 189.81,545.95 189.16,547.26 Z M160.48,495.2 C159.88,495.09 159.31,495.47 158.79,496.30 C158.22,497.16 157.73,498.29 157.32,499.76 C156.87,501.23 156.45,502.92 156.04,504.80 C155.63,506.72 155.33,508.64 155.06,510.60 C154.35,515.30 153.74,520.65 153.18,526.67 C155.40,520.99 157.24,515.87 158.64,511.28 C159.28,509.32 159.84,507.40 160.33,505.56 C160.82,503.71 161.16,502.02 161.38,500.51 C161.57,499.01 161.65,497.76 161.57,496.79 C161.46,495.81 161.12,495.28 160.48,495.20 Z M241.64,548.84 C241.38,548.96 240.92,549.15 240.32,549.45 C239.68,549.75 239.30,549.79 239.12,549.52 C238.78,549.07 238.74,548.35 239.00,547.38 C239.27,546.40 239.61,545.83 240.02,545.64 C241.52,544.93 243.07,544.29 244.61,543.73 C246.16,543.16 247.74,542.63 249.32,542.22 C246.31,539.92 243.29,537.48 240.25,534.95 C237.20,532.43 234.49,529.68 232.19,526.67 C230.08,527.65 227.75,528.86 225.19,530.32 C222.59,531.79 220.18,533.45 217.89,535.37 C215.59,537.29 213.63,539.40 212.05,541.73 C210.43,544.10 209.53,546.70 209.34,549.52 C209.15,552.35 209.76,554.64 211.07,556.33 C212.39,558.07 214.12,559.42 216.27,560.44 C218.41,561.45 220.78,562.21 223.38,562.66 C225.98,563.11 228.58,563.41 231.14,563.60 C232.83,563.79 234.86,563.75 237.27,563.53 C239.64,563.30 242.20,562.92 244.91,562.43 C247.59,561.94 250.30,561.30 253.04,560.44 C255.79,559.61 258.43,558.63 261.02,557.46 C261.81,557.13 262.64,556.71 263.51,556.26 C264.34,555.85 265.24,555.36 266.18,554.83 C264.41,553.59 262.57,552.19 260.57,550.69 C258.58,549.18 256.13,547.41 253.31,545.38 C250.41,546.02 248.07,546.62 246.34,547.23 C244.61,547.87 242.99,548.39 241.49,548.84 L241.64,548.84 Z M233.54,521.21 C237.27,519.45 240.85,517.79 244.35,516.25 C247.85,514.70 250.97,513.12 253.80,511.50 C256.58,509.92 258.88,508.19 260.65,506.35 C262.42,504.50 263.39,502.32 263.66,499.83 C263.92,497.27 263.02,495.20 260.91,493.59 C258.77,492.01 256.17,491.14 253.04,490.95 C250.15,490.76 247.36,491.10 244.69,491.93 C242.01,492.79 239.64,493.96 237.57,495.47 C235.50,496.97 233.77,498.78 232.45,500.89 C231.14,503.03 230.38,505.29 230.20,507.66 C229.93,510.34 230.16,512.75 230.83,514.97 C231.47,517.19 232.42,519.30 233.66,521.21 L233.54,521.21 Z M270.85,552.04 C273.07,550.61 274.95,549.26 276.50,548.02 C278.04,546.77 278.79,545.91 278.68,545.38 C278.49,544.85 278.11,544.44 277.55,544.18 C276.98,543.91 276.34,543.73 275.63,543.57 C274.91,543.46 274.20,543.42 273.45,543.46 C272.69,543.50 272.09,543.54 271.64,543.54 C269.08,543.61 266.75,543.73 264.68,543.91 C262.61,544.10 260.65,544.29 258.88,544.48 C260.91,545.87 262.94,547.19 264.94,548.35 C266.93,549.56 268.93,550.80 270.96,552.04 L270.85,552.04 Z M283.72,559.72 C284.36,560.17 284.70,560.70 284.74,561.27 C284.78,561.83 284.55,562.32 284.14,562.73 C283.68,563.15 283.01,563.34 282.14,563.37 C281.24,563.41 280.18,563.11 278.94,562.40 C275.29,560.55 272.39,558.86 270.17,557.35 C267.61,558.86 264.79,560.29 261.74,561.64 C258.69,563.04 255.53,564.20 252.25,565.22 C248.98,566.24 245.70,567.03 242.43,567.59 C239.15,568.12 235.99,568.31 232.98,568.12 C230.16,568.00 227.11,567.67 223.83,567.10 C220.56,566.54 217.51,565.52 214.69,564.09 C211.86,562.70 209.49,560.70 207.65,558.18 C205.80,555.66 204.90,552.38 204.98,548.32 C205.09,545.83 205.84,543.42 207.23,541.05 C208.63,538.72 210.47,536.50 212.73,534.35 C214.99,532.25 217.58,530.25 220.52,528.33 C223.42,526.41 226.43,524.68 229.56,523.10 C228.24,520.88 227.18,518.54 226.43,516.17 C225.68,513.80 225.34,511.28 225.41,508.61 C225.68,505.07 226.81,501.90 228.76,499.12 C230.68,496.33 233.06,494.04 235.84,492.19 C238.63,490.39 241.64,489.07 244.88,488.20 C248.11,487.38 251.09,487.11 253.83,487.38 C255.68,487.56 257.52,487.98 259.29,488.69 C261.06,489.41 262.61,490.31 263.92,491.40 C265.24,492.49 266.29,493.77 267.05,495.24 C267.80,496.71 268.14,498.29 268.06,499.99 C267.87,502.88 266.82,505.52 264.83,507.85 C262.83,510.22 260.31,512.37 257.30,514.29 C254.29,516.25 250.94,518.09 247.21,519.82 C243.48,521.55 239.83,523.25 236.18,524.94 C238.02,527.09 240.13,529.12 242.50,531.12 C244.84,533.11 247.21,535.10 249.58,537.17 C251.20,538.68 252.78,540.00 254.36,541.13 C256.85,540.71 259.33,540.41 261.81,540.23 C264.30,540.04 266.78,539.89 269.27,539.70 C270.59,539.58 271.98,539.55 273.48,539.55 C274.99,539.55 276.38,539.74 277.70,540.07 C278.98,540.41 280.03,540.94 280.90,541.58 C281.73,542.26 282.18,543.24 282.25,544.48 C282.37,545.87 281.73,547.41 280.34,549.11 C278.94,550.80 277.06,552.53 274.69,554.30 C276.19,555.17 277.70,556.07 279.21,556.94 C280.71,557.80 282.25,558.74 283.87,559.72 L283.72,559.72 Z M368.19,516.32 C371.99,514.63 375.38,512.75 378.28,510.60 C380.88,508.83 383.21,506.65 385.36,504.13 C387.46,501.60 388.59,498.82 388.78,495.73 C388.78,495.73 388.82,495.32 388.86,494.53 C388.89,493.74 388.48,492.83 387.61,491.85 C386.71,490.91 385.17,490.01 383.02,489.14 C380.84,488.32 377.56,487.83 373.24,487.64 C367.85,487.45 362.54,487.98 357.39,489.22 C352.19,490.46 347.26,492.23 342.56,494.56 C337.85,496.94 333.56,499.72 329.61,502.96 C325.66,506.20 322.23,509.70 319.26,513.46 C316.28,517.23 313.99,521.18 312.29,525.32 C310.60,529.50 309.70,533.60 309.51,537.70 C309.51,538.04 309.47,538.98 309.43,540.53 C309.39,542.07 309.54,543.95 309.92,546.10 C310.26,548.28 310.90,550.61 311.84,553.10 C312.78,555.58 314.25,557.88 316.28,559.99 C318.31,562.13 321.03,563.90 324.37,565.37 C327.73,566.84 331.98,567.67 337.14,567.85 C340.94,568.04 344.66,567.85 348.35,567.33 C352.00,566.76 355.54,566.05 358.97,565.11 C362.39,564.17 365.63,563.11 368.68,561.91 C371.73,560.74 374.51,559.46 377.11,558.14 C383.21,555.13 388.82,551.63 393.98,547.64 C394.16,547.45 394.35,547.34 394.62,547.26 C395.14,547.08 395.56,547.30 395.82,547.90 C395.93,547.90 395.78,548.47 395.44,549.64 C395.07,550.80 393.79,552.35 391.57,554.30 C391.23,554.64 389.53,555.85 386.48,557.88 C383.44,559.91 379.45,562.06 374.59,564.32 C369.73,566.57 364.20,568.57 358.06,570.30 C351.89,572.03 345.49,572.75 338.87,572.48 C333.90,572.30 329.23,571.51 324.90,570.11 C320.57,568.68 316.81,566.54 313.68,563.71 C310.56,560.89 308.11,557.31 306.38,553.02 C304.65,548.73 303.94,543.57 304.20,537.55 C304.39,533.03 305.40,528.48 307.25,523.93 C309.09,519.37 311.61,515.04 314.81,510.94 C318.01,506.84 321.78,503.00 326.11,499.50 C330.44,496.00 335.14,492.98 340.19,490.39 C345.23,487.83 350.54,485.87 356.15,484.55 C361.72,483.23 367.33,482.67 372.97,482.86 C373.16,482.86 373.80,482.86 374.97,482.90 C376.13,482.93 377.49,483.08 379.03,483.35 C380.57,483.61 382.23,483.99 383.96,484.48 C385.66,484.97 387.27,485.72 388.78,486.70 C390.29,487.68 391.53,488.88 392.51,490.27 C393.49,491.70 393.98,493.43 393.98,495.47 C393.98,498.56 393.00,501.45 391.00,504.20 C389.01,506.95 386.75,509.43 384.23,511.58 C381.70,513.76 379.33,515.53 377.11,516.89 C374.89,518.28 373.54,519.11 373.12,519.37 C372.67,519.63 372.11,519.90 371.39,520.20 C370.68,520.54 369.92,520.76 369.13,520.88 C368.34,521.03 367.59,521.03 366.95,520.88 C366.27,520.76 365.74,520.35 365.40,519.63 C364.69,518.39 364.65,517.64 365.29,517.30 C365.89,517.00 366.87,516.62 368.19,516.17 L368.19,516.32 Z M402.07,551.52 C402.07,552.23 402.11,553.02 402.14,553.96 C402.18,554.90 402.33,555.81 402.60,556.67 C402.86,557.54 403.27,558.29 403.91,558.86 C404.55,559.42 405.38,559.76 406.43,559.87 C407.23,559.95 408.05,559.76 408.84,559.27 C409.63,558.78 410.31,558.14 410.95,557.28 C411.59,556.45 412.16,555.51 412.68,554.49 C413.21,553.47 413.63,552.42 413.89,551.37 C412.65,550.65 411.52,549.86 410.50,548.96 C409.49,548.09 408.69,547.15 408.17,546.17 C407.19,544.78 406.43,543.35 405.91,541.96 C405.57,542.22 405.16,542.75 404.74,543.54 C404.29,544.33 403.88,545.19 403.46,546.13 C403.05,547.08 402.75,548.02 402.48,549.03 C402.22,550.05 402.07,550.88 402.07,551.52 Z M414.68,546.47 C414.68,545.31 414.64,544.03 414.60,542.60 C414.57,541.20 414.41,539.92 414.23,538.76 C414.00,537.59 413.66,536.65 413.21,535.90 C412.76,535.14 412.16,534.80 411.37,534.92 C410.20,534.99 409.52,535.63 409.30,536.87 C409.07,538.12 409.18,539.32 409.63,540.49 C410.35,542.78 412.01,544.78 414.68,546.47 Z M422.36,548.99 C423.86,549.07 425.22,548.81 426.42,548.17 C427.63,547.56 428.61,546.89 429.40,546.17 C430.38,545.31 431.17,544.33 431.81,543.27 L433.01,541.28 C433.54,540.41 433.99,540.30 434.40,540.94 C434.82,541.62 434.78,542.82 434.33,544.59 C433.54,546.36 432.41,547.94 431.02,549.26 C429.77,550.39 428.12,551.37 426.05,552.16 C423.98,552.95 421.38,553.14 418.25,552.68 L417.73,552.68 C416.75,555.70 415.28,558.33 413.29,560.59 C411.29,562.85 408.58,563.90 405.23,563.71 C403.65,563.64 402.33,563.15 401.28,562.21 C400.19,561.27 399.36,560.17 398.79,558.86 C398.23,557.58 397.82,556.22 397.59,554.79 C397.40,553.40 397.36,552.16 397.55,551.10 C398.08,546.77 398.83,543.57 399.81,541.54 C400.79,539.51 401.65,538.00 402.45,537.03 C402.90,536.50 403.31,536.16 403.65,535.97 C403.99,535.78 404.44,535.63 404.97,535.44 C405.23,534.13 405.83,533.00 406.77,532.06 C407.72,531.12 409.11,530.59 410.95,530.40 C411.82,530.29 412.80,530.51 413.81,531.04 C414.83,531.57 415.81,532.43 416.67,533.68 C417.54,534.92 418.25,536.53 418.74,538.53 C419.23,540.53 419.31,543.01 419.05,545.91 C419.05,546.36 419.05,546.77 419.01,547.11 C418.97,547.45 418.89,547.87 418.78,548.32 C420.10,548.77 421.30,548.99 422.36,548.99 Z M434.74,557.2 C435.68,557.31 436.51,557.69 437.19,558.33 C437.83,559.01 438.17,559.84 438.17,560.81 C438.17,561.87 437.72,562.73 436.77,563.37 C435.83,564.05 434.82,564.35 433.65,564.24 C432.71,564.24 431.96,563.90 431.43,563.22 C430.87,562.58 430.60,561.76 430.60,560.81 C430.60,559.65 431.01,558.71 431.88,557.99 C432.71,557.28 433.65,556.97 434.74,557.09 L434.74,557.20 Z" fill="#ffffff"/>
-      <path d="M23.5,620.42 C22.41,620.95 20.71,621.30 19.02,621.30 C13.91,621.30 10.93,618.00 10.93,612.80 C10.93,607.24 14.22,604.08 19.17,604.08 C20.93,604.08 22.41,604.45 23.41,604.96 L24.10,602.72 C23.38,602.35 21.69,601.78 19.08,601.78 C12.52,601.78 8.04,606.24 8.04,612.89 C8.04,619.85 12.49,623.62 18.45,623.62 C21.03,623.62 23.06,623.11 24.03,622.62 L23.50,620.42 Z M64.35,601.75 C58.70,601.75 54.56,606.15 54.56,612.86 C54.56,619.26 58.44,623.62 64.06,623.62 C69.46,623.62 73.88,619.73 73.88,612.48 C73.88,606.17 70.15,601.75 64.35,601.75 Z M64.25,603.98 C68.80,603.98 71.00,608.37 71.00,612.61 C71.00,617.41 68.55,621.39 64.22,621.39 C59.89,621.39 57.45,617.34 57.45,612.80 C57.45,608.18 59.71,603.98 64.25,603.98 Z M108.99,623.27 L108.99,614.24 C108.99,610.73 108.96,608.18 108.80,605.52 L108.90,605.49 C109.93,607.77 111.34,610.19 112.82,612.54 L119.53,623.27 L122.29,623.27 L122.29,602.13 L119.72,602.13 L119.72,610.98 C119.72,614.28 119.78,616.85 120.03,619.66 L119.94,619.70 C118.96,617.53 117.71,615.31 116.17,612.83 L109.43,602.13 L106.42,602.13 L106.42,623.27 L108.99,623.27 Z M154.98,622.24 C156.11,622.99 158.34,623.62 160.37,623.62 C165.36,623.62 167.75,620.77 167.75,617.50 C167.75,614.40 165.96,612.67 162.38,611.29 C159.47,610.16 158.18,609.19 158.18,607.22 C158.18,605.77 159.27,604.04 162.16,604.04 C164.07,604.04 165.49,604.64 166.15,605.05 L166.90,602.82 C165.99,602.29 164.39,601.78 162.26,601.78 C158.14,601.78 155.42,604.24 155.42,607.53 C155.42,610.48 157.55,612.29 161.01,613.55 C163.86,614.61 164.99,615.78 164.99,617.73 C164.99,619.85 163.35,621.33 160.56,621.33 C158.68,621.33 156.92,620.73 155.70,619.95 L154.98,622.24 Z M200.47,602.13 L200.47,614.59 C200.47,621.18 203.72,623.62 208.05,623.62 C212.63,623.62 216.06,620.98 216.06,614.49 L216.06,602.13 L213.29,602.13 L213.29,614.68 C213.29,619.32 211.26,621.39 208.15,621.39 C205.32,621.39 203.23,619.39 203.23,614.68 L203.23,602.13 L200.47,602.13 Z M249.75,623.27 L261.54,623.27 L261.54,620.98 L252.51,620.98 L252.51,602.13 L249.75,602.13 L249.75,623.27 Z M294.83,623.27 L297.58,623.27 L297.58,604.45 L304.05,604.45 L304.05,602.13 L288.39,602.13 L288.39,604.45 L294.83,604.45 L294.83,623.27 Z M335.36,602.13 L335.36,623.27 L338.11,623.27 L338.11,602.13 L335.36,602.13 Z M374.44,623.27 L374.44,614.24 C374.44,610.73 374.41,608.18 374.25,605.52 L374.35,605.49 C375.38,607.77 376.79,610.19 378.27,612.54 L384.99,623.27 L387.74,623.27 L387.74,602.13 L385.17,602.13 L385.17,610.98 C385.17,614.28 385.23,616.85 385.48,619.66 L385.39,619.70 C384.42,617.53 383.16,615.31 381.62,612.83 L374.88,602.13 L371.87,602.13 L371.87,623.27 L374.44,623.27 Z M437.62,612.17 L430.65,612.17 L430.65,614.37 L434.92,614.37 L434.92,620.67 C434.29,620.98 433.07,621.24 431.29,621.24 C426.32,621.24 423.13,618.06 423.13,612.70 C423.13,607.40 426.48,604.20 431.63,604.20 C433.76,604.20 435.17,604.57 436.30,605.11 L437.00,602.88 C436.09,602.45 434.14,601.92 431.70,601.92 C424.60,601.92 420.24,606.52 420.24,612.83 C420.24,616.12 421.37,618.94 423.19,620.71 C425.26,622.68 427.90,623.50 431.10,623.50 C433.95,623.50 436.40,622.80 437.62,622.33 L437.62,612.17 Z" fill="#b9bdc4"/>
-    </svg>
-    <h1>Our new site is on its way.</h1>
-    <p class="lede">We're putting the finishing touches on something new. In the meantime, get in touch — we'd love to help with your next event.</p>
-    <div class="contact">
-      <a href="tel:+27817672224">081 767 2224</a>
-      <a href="mailto:info@keithandco.co.za">info@keithandco.co.za</a>
+
+<!-- Top contact bar -->
+<div class="topbar">
+  <div class="wrap">
+    <div class="tb-left">
+      <span class="tb-item"><span class="dia"></span><a href="tel:+27817672224">081 767 2224</a></span>
+      <span class="tb-item"><span class="dia"></span><a href="mailto:info@keithandco.co.za">info@keithandco.co.za</a></span>
+    </div>
+    <div class="tb-right tb-item"><span class="dia"></span>Sandhurst Office Park, Johannesburg</div>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Keith and Co Consulting — home">
+      <img class="mark" src="assets/logos/keithco-mark.svg" alt="" aria-hidden="true">
+      <span class="name">
+        <span class="script">Keith &amp; Co.</span>
+        <span class="sub">CONSULTING</span>
+      </span>
+    </a>
+    <button class="menu-toggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <nav class="main" id="mainnav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact Us</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero slider -->
+<section class="hero" id="home">
+  <div class="slides" aria-hidden="true">
+    <div class="slide slide-1 active"><div class="ph"></div></div>
+    <div class="slide slide-2"><div class="ph"></div></div>
+    <div class="slide slide-3"><div class="ph"></div></div>
+  </div>
+  <div class="hero-diamonds" aria-hidden="true"><div class="d1"></div><div class="d2"></div><div class="d3"></div></div>
+  <div class="hero-diamonds hero-diamonds-left" aria-hidden="true"><div class="d1"></div><div class="d2"></div><div class="d3"></div></div>
+  <div class="wrap hero-inner">
+    <div class="hero-grid">
+      <div class="hero-logo">
+        <img class="lockup" src="assets/logos/keithco-lockup-onnavy.svg" alt="Keith &amp; Co. Consulting">
+      </div>
+      <div class="hero-copy">
+        <p class="kicker">Event Infrastructure &middot; South Africa</p>
+        <h1>We build the stage your brand stands on.</h1>
+        <p class="script-line">from concept to breakdown</p>
+        <p class="sub">Custom exhibition stands, event infrastructure and end-to-end project management — delivered to global standards by a tried-and-tested network of South African and African service providers.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-navy" href="contact.html">Make an enquiry</a>
+          <a class="btn btn-ghost" href="services.html">Explore our services</a>
+        </div>
+      </div>
     </div>
   </div>
+  <div class="slider-dots" role="tablist" aria-label="Hero slides">
+    <button class="active" aria-label="Slide 1"></button>
+    <button aria-label="Slide 2"></button>
+    <button aria-label="Slide 3"></button>
+  </div>
+</section>
+
+<!-- Stats strip -->
+<div class="strip">
+  <div class="wrap">
+    <div class="stat"><div class="num">10+</div><div class="lbl">Years of experience</div></div>
+    <div class="stat"><div class="num">7</div><div class="lbl">Specialist service lines</div></div>
+    <div class="stat"><div class="num">5+</div><div class="lbl">Major venues nationwide</div></div>
+    <div class="stat"><div class="num">100%</div><div class="lbl">Start-to-finish on every build</div></div>
+  </div>
+</div>
+
+<!-- About teaser -->
+<section class="block about-fit">
+  <div class="wrap about-grid">
+    <div class="about-copy reveal">
+      <p class="eyebrow">About Us</p>
+      <h2 class="section-title">Experts in event infrastructure &amp; project management</h2>
+      <p>With more than 10 years of experience, Keith &amp; Co Consulting (Pty) Ltd has been delivering some of the best project management in the event industry across South Africa. We conceptualise, design and develop our products and services to provide quality results that meet global standards.</p>
+      <p>Events are complex, dynamic and ever-changing, and pressure rises as the date approaches. Our job is to take that pressure off you by organising and managing the structure and dynamics of your event on your behalf.</p>
+      <a class="btn btn-navy" href="about.html" style="margin-top:10px">More about us</a>
+    </div>
+    <div class="about-visual reveal">
+      <div class="gallery" role="img" aria-label="Photos of Keith &amp; Co. event and exhibition builds">
+        <div class="g-slide" style="background-image:url('assets/images/about-stand-1.jpg')"></div>
+        <div class="g-slide" style="background-image:url('assets/images/about-stand-2.jpg')"></div>
+        <div class="g-slide" style="background-image:url('assets/images/about-stand-3.jpg')"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services grid -->
+<section class="block services">
+  <div class="wrap">
+    <div class="services-head">
+      <div>
+        <p class="eyebrow">What we do</p>
+        <h2 class="section-title">One team.<br>Every part of your build.</h2>
+      </div>
+      <p class="lede">From the first concept sketch to the last cable coiled, every service line is managed under one roof — one accountable partner, not seven suppliers.</p>
+    </div>
+    <div class="svc-grid">
+      <a class="svc reveal" data-svc="custom-stand" href="services.html#custom-stands">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 20h18M5 20V9l7-5 7 5v11M9 20v-6h6v6"/></svg></div>
+        <h3>Custom Stand Design &amp; Build</h3>
+        <p>Bespoke exhibition stands tailored to your brand identity, built to global standards.</p>
+      </a>
+      <a class="svc reveal" data-svc="shell" href="services.html#shell-scheme">
+        <div class="icon"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14"/><path d="M9 5v14M15 5v14"/></svg></div>
+        <h3>Shell Scheme Design &amp; Build</h3>
+        <p>Smart, cost-effective modular shell schemes for exhibitions of any scale.</p>
+      </a>
+      <a class="svc reveal" data-svc="pm" href="services.html#project-management">
+        <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/></svg></div>
+        <h3>Project Management</h3>
+        <p>End-to-end coordination of your event build — timelines, suppliers, logistics and on-site delivery.</p>
+      </a>
+      <a class="svc reveal" data-svc="furniture" href="services.html#furniture">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M5 12h14M5 12v7M19 12v7M7 12V8h10v4"/></svg></div>
+        <h3>Furniture Hire</h3>
+        <p>Quality event furniture for hire — seating, cocktail sets, counters and display units.</p>
+      </a>
+      <a class="svc reveal" data-svc="electrics" href="services.html#electrics">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M13 2L5 13h6l-1 9 8-11h-6l1-9Z"/></svg></div>
+        <h3>Electrics</h3>
+        <p>Certified event electrical installations — safe, compliant and reliable.</p>
+      </a>
+      <a class="svc reveal" data-svc="av" href="services.html#audio-visual">
+        <div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="12"/><path d="M9 21h6M12 17v4"/></svg></div>
+        <h3>Audio Visual Design &amp; Setup</h3>
+        <p>Screens, sound, lighting and staging designed and installed to make your content land.</p>
+      </a>
+      <a class="svc reveal" data-svc="marquee" href="services.html#marquees">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 20L12 5l9 15M7.5 20L12 12l4.5 8"/></svg></div>
+        <h3>Marquees &amp; Bedouin Tents</h3>
+        <p>Weatherproof marquees and free-form stretch tents for outdoor events and activations.</p>
+      </a>
+      <!-- <a class="svc reveal" data-svc="xboard" href="services.html#xboard">
+        <span class="tag">ECO</span>
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 21c-5 0-8-3.5-8-8 0-5.5 8-10 8-10s8 4.5 8 10c0 4.5-3 8-8 8Z"/><path d="M12 21V9"/></svg></div>
+        <h3>Xboard Stand Design &amp; Build</h3>
+        <p>Eco-friendly, fully recyclable Xboard stands — sustainability without compromising impact.</p>
+      </a> -->
+    </div>
+  </div>
+</section>
+
+<!-- Achievements -->
+<section class="block achieve">
+  <div class="wrap">
+    <p class="eyebrow on-dark">Track record</p>
+    <h2 class="section-title on-dark">We've helped bring South Africa's landmark events to life</h2>
+    <p class="lede">We have played an integral role in delivering infrastructure for internationally recognised conferences and exhibitions at the country's premier venues.</p>
+    <div class="events reveal">
+      <div class="event"><div class="nm">Batseta Winter Conference</div><div class="vn">Sun City | Emperors Palace</div></div>
+      <div class="event"><div class="nm">Mining Indaba</div><div class="vn">CTICC, Cape Town</div></div>
+      <div class="event"><div class="nm">62nd International Astronautical Congress</div><div class="vn">CTICC, Cape Town</div></div>
+      <div class="event"><div class="nm">Aesthetic Medicine Congress South Africa</div><div class="vn">CSIR International Convention Centre, Pretoria</div></div>
+      <div class="event"><div class="nm">Commonwealth Law Congress</div><div class="vn">Spier / ELCC</div></div>
+      <div class="event"><div class="nm">Your event next</div><div class="vn">Let's talk &rarr;</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Clients & Associates -->
+<section class="block">
+  <div class="wrap">
+    <p class="eyebrow">Associates &amp; Clients</p>
+    <h2 class="section-title">Trusted by the industry</h2>
+    <p class="lede">A tried-and-tested network of South African and African partners — and clients who come back.</p>
+    <div class="logo-carousel reveal">
+      <div class="logo-track">
+        <div class="logo-slot has-logo"><img src="assets/logos/client-aberdeen-standard.jpg" alt="Aberdeen Standard Investments"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-acpi.jpg" alt="ACPI Investment Managers"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-batseta.jpg" alt="Batseta — Council of Retirement Funds for South Africa"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-egf.jpg" alt="Event Greening Forum"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-vunani.jpg" alt="Vunani Fund Managers"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-argon.jpg" alt="Argon Asset Management"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-first-medical.jpg" alt="First Medical Company"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-santam.png" alt="Santam"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-oldmutual.png" alt="Old Mutual"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-70salt.png" alt="Salt Employee Benefits"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-27four.png" alt="27four"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-ashburton.png" alt="Ashburton Investments"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-austell.png" alt="Austell"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-mahlako.png" alt="Mahlako"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-medika.png" alt="Medika SA"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-allan-gray.png" alt="Allan Gray"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-foord.png" alt="Foord Asset Management"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-glacier.png" alt="Glacier by Sanlam"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-metropolitan.png" alt="Metropolitan Health"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-momentum.png" alt="Momentum Group"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-otto1890.png" alt="Otto1890 Investment Specialists"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-pianoboard.png" alt="Pianoboard Krah Pipes"></div>
+        <div class="logo-slot has-logo"><img src="assets/logos/client-sanlam.png" alt="Sanlam"></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-aberdeen-standard.jpg" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-acpi.jpg" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-batseta.jpg" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-egf.jpg" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-vunani.jpg" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-argon.jpg" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-first-medical.jpg" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-santam.png" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-oldmutual.png" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-70salt.png" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-27four.png" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-ashburton.png" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-austell.png" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-mahlako.png" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-medika.png" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-allan-gray.png" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-foord.png" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-glacier.png" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-metropolitan.png" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-momentum.png" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-otto1890.png" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-pianoboard.png" alt=""></div>
+        <div class="logo-slot has-logo" aria-hidden="true"><img src="assets/logos/client-sanlam.png" alt=""></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA band -->
+<section class="cta-band">
+  <h2>Planning an event or exhibition?</h2>
+  <p class="script-line">let's build something together</p>
+  <a class="btn btn-ghost" href="contact.html">Get in touch</a>
+</section>
+
+<!-- Footer -->
+<footer class="site">
+  <div class="wrap">
+    <div class="f-grid">
+      <div class="f-brand">
+        <div class="script">Keith &amp; Co.</div>
+        <div class="sub">CONSULTING</div>
+        <p>Event infrastructure and project management, delivered to global standards across South Africa and beyond.</p>
+        <div class="social" aria-label="Social media">
+          <a href="https://www.facebook.com/KeithandCoConsulting/" aria-label="Facebook"><span>FB</span></a>
+          <a href="https://www.instagram.com/Keithandco_86" aria-label="Instagram"><span>IG</span></a>
+          <a href="https://twitter.com/KeithCompany" aria-label="Twitter / X"><span>X</span></a>
+          <a href="#" aria-label="LinkedIn"><span>IN</span></a>
+        </div>
+      </div>
+      <div>
+        <h5>Site</h5>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contact Us</h5>
+        <ul>
+          <li>Sandhurst Office Park, The Grove building</li>
+          <li>Cnr Rivonia &amp; Harrow Rd, Sandhurst</li>
+          <li>Johannesburg, Gauteng</li>
+          <li>2196</li>
+          <li><a href="tel:+27817672224">081 767 2224</a></li>
+          <li><a href="mailto:info@keithandco.co.za">info@keithandco.co.za</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <span>&copy; <span id="yr"></span> Keith &amp; Co Consulting (Pty) Ltd</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
 </body>
 </html>

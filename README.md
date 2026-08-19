@@ -15,6 +15,14 @@ npx serve .
 python3 -m http.server 8000
 ```
 
+## Full technical documentation
+
+Open `developer-guide.html` in a browser (or serve it like any other page)
+for a walkthrough of the design system, page structure, JS behavior, the
+image gallery aspect-ratio gotcha, testimonials, and the contact form
+integration. It's excluded from the sitemap and `robots.txt` since it's for
+developers, not visitors.
+
 ## Edit it with Claude Code
 
 This project includes a `CLAUDE.md` file that Claude Code reads automatically —
