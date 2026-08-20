@@ -16,16 +16,22 @@ if (serviceSelect) {
   }
 }
 
-/* Hero slider (index.html only) */
+/* Hero slider (index.html only) — background texture and headline/copy
+   crossfade together, driven off the same index. */
 const slides = document.querySelectorAll('.slide');
+const heroCopySlides = document.querySelectorAll('.hero-copy-stage .h-slide');
 const dots = document.querySelectorAll('.slider-dots button');
 if (slides.length) {
   let cur = 0, timer;
   const show = (i) => {
     slides[cur].classList.remove('active');
+    heroCopySlides[cur]?.classList.remove('active');
+    heroCopySlides[cur]?.setAttribute('aria-hidden', 'true');
     dots[cur]?.classList.remove('active');
     cur = i;
     slides[cur].classList.add('active');
+    heroCopySlides[cur]?.classList.add('active');
+    heroCopySlides[cur]?.setAttribute('aria-hidden', 'false');
     dots[cur]?.classList.add('active');
   };
   const next = () => show((cur + 1) % slides.length);
