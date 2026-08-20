@@ -142,6 +142,13 @@ nav.main a.active{color:var(--navy)}
 .hero h1{font-family:var(--font-display);font-weight:800;font-size:clamp(38px,6vw,68px);line-height:1.06;letter-spacing:-.015em;margin:22px 0 10px;max-width:14ch}
 .hero .script-line{font-family:var(--font-script);font-size:clamp(26px,3.4vw,40px);color:var(--silver);margin-bottom:22px}
 .hero p.sub{max-width:52ch;color:#cfd5de;font-size:17px;margin-bottom:34px}
+/* Headline/kicker/copy crossfade in lockstep with the background slide —
+   same grid-stack technique as .t-stage (testimonials): every .h-slide
+   occupies the same cell so the box sizes to the tallest and swapping
+   slides never reflows the CTAs below it. */
+.hero-copy-stage{display:grid}
+.hero-copy-stage .h-slide{grid-area:1/1;opacity:0;transition:opacity 1s ease;pointer-events:none}
+.hero-copy-stage .h-slide.active{opacity:1;pointer-events:auto}
 .hero-ctas{display:flex;gap:16px;flex-wrap:wrap}
 .slider-dots{position:absolute;left:24px;bottom:28px;z-index:3;display:flex;gap:10px}
 .slider-dots button{width:12px;height:12px;border:1px solid rgba(255,255,255,.7);background:transparent;transform:rotate(45deg);cursor:pointer;padding:0}
