@@ -86,10 +86,13 @@ apply the same change to ALL four HTML files.
 2. Swap in a real Janus Henderson logo (PNG/JPG/SVG) once available —
    `.eps` can't be used on the web.
 3. First testimonial (First Medical) is real; second (Batseta, from their
-   signed recommendation letter) added 2026-08-14. Both slots on
-   contact.html now filled — no more testimonial TODO unless a third is
-   ever wanted (the `.t-stage` crossfade is tuned for exactly 2 slides,
-   7s/14s timing — adding a 3rd needs a CSS delay/animation tweak).
+   signed recommendation letter) added 2026-08-14; third (Board of
+   Healthcare Funders, attributed under the Momentum logo) added
+   2026-08-24. The `.t-stage` crossfade is generalized for N slides —
+   cycle length is `7s * N` with each `.t-slide:nth-child(k)` delayed by
+   `7s * (k-1)`, and the `testiFade` keyframe percentages are scaled to
+   `100/N` per slide — so adding a 4th just needs a new `nth-child` delay
+   rule and the cycle/keyframe numbers recalculated the same way.
 4. Real photography exists for services/about (assets/images/) but is
    applied via CSS `background-image` on `<div>`s, not `<img>` tags — so
    none of it has an accessible text alternative for screen readers. Same
