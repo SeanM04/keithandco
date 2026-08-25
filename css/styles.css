@@ -307,14 +307,15 @@ nav.main a.active{color:var(--navy)}
 .t-stage{position:relative;margin-top:44px;display:grid}
 .t-stage.interactive{cursor:pointer}
 .t-stage.paused .t-slide{animation-play-state:paused}
-.t-slide{grid-area:1/1;position:relative;background:var(--white);padding:32px 34px;opacity:0;animation:testiFade 14s infinite}
+.t-slide{grid-area:1/1;position:relative;background:var(--white);padding:32px 34px;opacity:0;animation:testiFade 21s infinite}
 .t-slide:nth-child(1){animation-delay:0s}
 .t-slide:nth-child(2){animation-delay:7s}
+.t-slide:nth-child(3){animation-delay:14s}
 @keyframes testiFade{
   0%{opacity:0;transform:translateY(16px)}
-  4%{opacity:1;transform:translateY(0)}
-  46%{opacity:1;transform:translateY(0)}
-  50%{opacity:0;transform:translateY(-16px)}
+  2.67%{opacity:1;transform:translateY(0)}
+  30.67%{opacity:1;transform:translateY(0)}
+  33.33%{opacity:0;transform:translateY(-16px)}
   100%{opacity:0;transform:translateY(-16px)}
 }
 @media(prefers-reduced-motion: reduce){
