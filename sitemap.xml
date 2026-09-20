@@ -16,6 +16,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.keithandco.co.za/gallery.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.keithandco.co.za/contact.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>

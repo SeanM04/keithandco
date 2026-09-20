@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Concept — Diamond Signature</title>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=Allura&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.typekit.net/lxe2zei.css">
+<link rel="stylesheet" href="css/styles.css">
+<style>
+/* ================= Concept: the diamond as a real signature, real
+   photography, and scroll-linked depth — not just cosmetic motion. ================= */
+
+.sig-hero{position:relative;background:var(--navy-deep);overflow:hidden;padding:100px 0 110px}
+.sig-hero::before{content:"";position:absolute;left:-180px;bottom:-180px;width:420px;height:420px;background:rgba(255,255,255,.03);clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%)}
+.sig-hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
+.sig-kicker{display:flex;align-items:center;gap:14px;font-family:var(--font-display);font-size:11.5px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--silver);margin-bottom:26px}
+.sig-kicker::before{content:"";width:26px;height:1px;background:rgba(255,255,255,.4)}
+.sig-hero h1{font-family:var(--font-display);font-weight:800;font-size:clamp(42px,6.4vw,82px);line-height:.99;letter-spacing:-.02em;color:var(--white);text-wrap:balance;margin-bottom:26px}
+.sig-hero h1 span{color:var(--silver)}
+.sig-hero p.sub{font-family:var(--font-body);font-size:17.5px;line-height:1.75;color:rgba(255,255,255,.7);max-width:42ch;margin-bottom:38px}
+.sig-ctas{display:flex;gap:16px;flex-wrap:wrap}
+
+.sig-hero-visual{position:relative;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center}
+.sig-hero-visual::before{content:"";position:absolute;width:72%;height:72%;border:1.5px solid rgba(255,255,255,.16);clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);z-index:0;transform:translateY(var(--px1,0px));will-change:transform}
+.sig-hero-visual::after{content:"";position:absolute;width:38%;height:38%;background:rgba(255,255,255,.05);clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);top:-6%;right:-4%;z-index:0;transform:translateY(var(--px2,0px));will-change:transform}
+.sig-diamond-wrap{position:relative;width:82%;z-index:1;transform:translateY(var(--px3,0px));will-change:transform}
+.sig-diamond{position:relative;width:100%;aspect-ratio:1/1;clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.55)}
+.sig-diamond img{width:100%;height:100%;object-fit:cover;transform:scale(1.18)}
+.sig-diamond::after{content:"";position:absolute;inset:0;background:linear-gradient(150deg,rgba(255,255,255,.12),transparent 55%)}
+.sig-cap{position:absolute;left:50%;bottom:-14px;transform:translateX(-50%);background:var(--white);box-shadow:var(--shadow);padding:12px 22px;font-family:var(--font-display);font-weight:700;font-size:12.5px;letter-spacing:.04em;color:var(--navy-ink);white-space:nowrap;z-index:2}
+.sig-cap span{display:block;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);margin-bottom:2px}
+
+@media(max-width:900px){
+  .sig-hero .wrap{grid-template-columns:1fr;text-align:center;gap:56px}
+  .sig-hero h1{font-size:clamp(36px,10vw,56px)}
+  .sig-hero p.sub{margin-left:auto;margin-right:auto}
+  .sig-ctas{justify-content:center}
+  .sig-kicker{justify-content:center}
+  .sig-hero-visual{max-width:320px;margin:0 auto}
+}
+
+/* ---------- diamond divider between sections ---------- */
+.sig-divider{position:relative;height:120px;display:flex;align-items:center;justify-content:center;background:var(--white);overflow:hidden}
+.sig-divider .d{width:30px;height:30px;background:var(--navy);clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);transform:rotate(var(--divrot,0deg));will-change:transform}
+
+/* ---------- featured work: diamond mosaic ---------- */
+.sig-work{padding:110px 0 130px;background:var(--white)}
+.sig-work .head{max-width:620px;margin-bottom:80px}
+.sig-work h2{font-family:var(--font-display);font-weight:800;font-size:clamp(30px,4.2vw,50px);letter-spacing:-.01em;color:var(--navy-ink);text-wrap:balance;margin-top:14px}
+.sig-work p{color:var(--text-body);font-size:16px;line-height:1.7;margin-top:16px}
+
+.sig-mosaic{display:grid;grid-template-columns:repeat(6,1fr);column-gap:8px}
+.sig-card{grid-column:span 2;padding:14px}
+.sig-card:nth-child(2){margin-top:64px}
+.sig-card:nth-child(3){margin-top:-34px}
+.sig-card:nth-child(5){margin-top:46px}
+.sig-card:nth-child(6){margin-top:-20px}
+.sig-frame{position:relative;aspect-ratio:1/1;clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);overflow:hidden;box-shadow:var(--shadow);cursor:pointer;transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s ease}
+.sig-card:hover .sig-frame{transform:scale(1.07) translateY(-8px);box-shadow:0 30px 60px rgba(20,31,48,.28)}
+.sig-frame img{width:100%;height:100%;object-fit:cover;transition:transform .7s ease}
+.sig-card:hover .sig-frame img{transform:scale(1.14)}
+.sig-card .cap{text-align:center;margin-top:18px;font-family:var(--font-display);font-size:12.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--navy-ink);opacity:0;transform:translateY(6px);transition:opacity .35s ease,transform .35s ease}
+.sig-card:hover .cap{opacity:1;transform:none}
+
+@media(max-width:900px){
+  .sig-mosaic{grid-template-columns:repeat(2,1fr);row-gap:20px}
+  .sig-card{grid-column:span 1 !important;margin-top:0 !important}
+  .sig-card .cap{opacity:1;transform:none}
+}
+
+/* ---------- scroll reveal, staggered ---------- */
+.sig-reveal{opacity:0;transform:translateY(36px);transition:opacity .75s cubic-bezier(.2,.8,.2,1),transform .75s cubic-bezier(.2,.8,.2,1)}
+.sig-reveal.in{opacity:1;transform:none}
+
+.sig-note{background:var(--mist);border-left:3px solid var(--navy);padding:22px 26px;margin:0 0 0;font-size:14px;line-height:1.6;color:var(--text-body)}
+.sig-note .wrap{max-width:900px;padding:0}
+.sig-note-outer{padding:28px 24px}
+
+@media(prefers-reduced-motion: reduce){
+  .sig-diamond-wrap,.sig-hero-visual::before,.sig-hero-visual::after,.sig-divider .d{transform:none !important}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="tb-left">
+      <span class="tb-item"><span class="dia"></span><a href="tel:+27817672224">081 767 2224</a></span>
+      <span class="tb-item"><span class="dia"></span><a href="mailto:info@keithandco.co.za">info@keithandco.co.za</a></span>
+    </div>
+    <div class="tb-right tb-item"><span class="dia"></span>Sandhurst Office Park, Johannesburg</div>
+  </div>
+</div>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Keith and Co Consulting — home">
+      <img class="mark" src="assets/logos/keithco-mark.svg" alt="" aria-hidden="true">
+      <span class="name">
+        <span class="script">Keith &amp; Co.</span>
+        <span class="sub">CONSULTING</span>
+      </span>
+    </a>
+    <button class="menu-toggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <nav class="main" id="mainnav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="services.html">Services</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="contact.html">Contact Us</a>
+    </nav>
+  </div>
+</header>
+
+<div class="sig-note-outer">
+  <div class="wrap" style="max-width:900px">
+    <p class="sig-note">This is a design concept, not a finished page — it exists to show a <em>direction</em>: the diamond mark developed into a real signature device (not just a bullet point), real photography instead of a gradient placeholder, and motion that gives the page physical depth on scroll. The hero and mosaic photos below are borrowed from the live gallery to prove the idea with real material — the actual homepage photo would be chosen separately, not necessarily one specific client's stand.</p>
+  </div>
+</div>
+
+<section class="sig-hero">
+  <div class="wrap">
+    <div>
+      <p class="sig-kicker">Event Infrastructure · South Africa</p>
+      <h1>Precision-built,<br><span>stage by stage.</span></h1>
+      <p class="sub">Custom exhibition stands, event infrastructure and end-to-end project management — delivered to global standards by a tried-and-tested network across South Africa.</p>
+      <div class="sig-ctas">
+        <a class="btn btn-navy" href="contact.html">Make an Enquiry</a>
+        <a class="btn btn-ghost" href="services.html">Explore Our Services</a>
+      </div>
+    </div>
+    <div class="sig-hero-visual">
+      <div class="sig-diamond-wrap">
+        <div class="sig-diamond">
+          <img src="assets/images/gallery/custom-stand-BMK.jpeg" alt="Custom exhibition stand built for BMK Orthopaedics">
+        </div>
+        <div class="sig-cap"><span>Recent Build</span>BMK Orthopaedics</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sig-divider" aria-hidden="true"><div class="d" id="divDiamond"></div></div>
+
+<section class="sig-work">
+  <div class="wrap">
+    <div class="head sig-reveal">
+      <p class="eyebrow">Our Work</p>
+      <h2>The diamond as a frame, not a bullet</h2>
+      <p>The same mark from the logo, carried through as the actual shape work is presented in — not a decorative dot next to a headline.</p>
+    </div>
+
+    <div class="sig-mosaic">
+      <div class="sig-card sig-reveal">
+        <div class="sig-frame"><img src="assets/images/gallery/custom-stand-liberty.jpeg" alt="Liberty, Standard Bank Group exhibition stand"></div>
+        <div class="cap">Liberty</div>
+      </div>
+      <div class="sig-card sig-reveal">
+        <div class="sig-frame"><img src="assets/images/gallery/custom-stand-momentum.jpeg" alt="Momentum Health exhibition stand"></div>
+        <div class="cap">Momentum Health</div>
+      </div>
+      <div class="sig-card sig-reveal">
+        <div class="sig-frame"><img src="assets/images/gallery/custom-stand-truffle.jpeg" alt="Truffle exhibition stand"></div>
+        <div class="cap">Truffle</div>
+      </div>
+      <div class="sig-card sig-reveal">
+        <div class="sig-frame"><img src="assets/images/gallery/shell-scheme-maksure.jpeg" alt="Maksure Risk Solutions shell scheme stand"></div>
+        <div class="cap">Maksure</div>
+      </div>
+      <div class="sig-card sig-reveal">
+        <div class="sig-frame"><img src="assets/images/gallery/custom-stand-medika.jpeg" alt="Medika SA exhibition stand"></div>
+        <div class="cap">Medika SA</div>
+      </div>
+      <div class="sig-card sig-reveal">
+        <div class="sig-frame"><img src="assets/images/gallery/custom-stand-Vunani.jpg" alt="Vunani Fund Managers exhibition stand"></div>
+        <div class="cap">Vunani</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <h2>Like this direction?</h2>
+  <p class="script-line">tell me what to push further, or what to drop</p>
+  <a class="btn btn-ghost" href="contact.html">Get a quote</a>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="f-grid">
+      <div class="f-brand">
+        <div class="script">Keith &amp; Co.</div>
+        <div class="sub">CONSULTING</div>
+        <p>Event infrastructure and project management, delivered to global standards across South Africa and beyond.</p>
+        <div class="social" aria-label="Social media">
+          <a href="https://www.facebook.com/KeithandCoConsulting/" aria-label="Facebook"><span>FB</span></a>
+          <a href="https://www.instagram.com/Keithandco_86" aria-label="Instagram"><span>IG</span></a>
+          <a href="https://twitter.com/KeithCompany" aria-label="Twitter / X"><span>X</span></a>
+          <a href="#" aria-label="LinkedIn"><span>IN</span></a>
+        </div>
+      </div>
+      <div>
+        <h5>Site</h5>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contact Us</h5>
+        <ul>
+          <li>Sandhurst Office Park, The Grove building</li>
+          <li>Cnr Rivonia &amp; Harrow Rd, Sandhurst</li>
+          <li>Johannesburg, Gauteng</li>
+          <li>2196</li>
+          <li><a href="tel:+27817672224">081 767 2224</a></li>
+          <li><a href="mailto:info@keithandco.co.za">info@keithandco.co.za</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <span>&copy; <span id="yr"></span> Keith &amp; Co Consulting (Pty) Ltd</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+(function(){
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var heroVisual = document.querySelector('.sig-hero-visual');
+  var diamondWrap = document.querySelector('.sig-diamond-wrap');
+  var divDiamond = document.getElementById('divDiamond');
+
+  if (!reduceMotion) {
+    var ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        var y = window.scrollY;
+        if (heroVisual) {
+          heroVisual.style.setProperty('--px1', (y * 0.05) + 'px');
+          heroVisual.style.setProperty('--px2', (y * -0.09) + 'px');
+        }
+        if (diamondWrap) diamondWrap.style.setProperty('--px3', (y * 0.03) + 'px');
+        if (divDiamond) divDiamond.style.setProperty('--divrot', (45 + y * 0.15) + 'deg');
+        ticking = false;
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e, i) {
+      if (e.isIntersecting) {
+        setTimeout(function () { e.target.classList.add('in'); }, i * 70);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.sig-reveal').forEach(function (el) { io.observe(el); });
+})();
+</script>
+</body>
+</html>

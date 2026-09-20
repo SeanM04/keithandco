@@ -56,6 +56,7 @@ you through adding a custom domain), and HTTPS is issued automatically.
 index.html        Home
 about.html        About Us
 services.html     Services (9 service lines)
+gallery.html      Filterable photo gallery + lightbox
 contact.html      Contact + enquiry form + testimonials
 css/styles.css    Full design system (one file)
 js/main.js        Slider, menu, reveal animations, form handler
