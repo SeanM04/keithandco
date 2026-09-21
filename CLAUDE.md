@@ -122,7 +122,198 @@ change to ALL FIVE HTML files.
    only includes Bold/Bold Condensed. Shipped on Bold instead (see brand
    rules above). Revisit only if Creative Cloud gets picked up anyway.
 
-### Done (audited 2026-09-20)
+### Done (audited 2026-09-21)
+
+- Moved contact.html's FAQ from above the enquiry form to below it,
+  2026-09-21 — reverses the earlier placement (the FAQ entries below still
+  describe it as sitting above "Get in touch"; that is no longer true).
+  Reasoning: the page's job is enquiries, and with the FAQ first the form
+  started ~1,180px down (below the fold on a 900px screen); it now starts
+  at ~552px. Order is hero → form → FAQ → testimonials. Copy changed to
+  match: the FAQ lede and the first answer said "the form below", now
+  "the form above". Section backgrounds re-alternate so nothing blends:
+  form white, FAQ `var(--mist)`, testimonials now white (`.testi`) with the
+  `.t-slide` cards flipped to mist (both rules are contact-page-only —
+  `.testi` appears in no other page). Also removed a dead
+  `padding-top:0;padding-bottom:96px` from `.faq-block`: it never applied,
+  because `section.block{padding:96px 0}` has higher specificity, so the
+  FAQ always had normal padding. Verified with Playwright at 1440px and
+  390px: section order and backgrounds, all 5 FAQ items reveal, multiple
+  items open independently, no horizontal scroll, zero console/network
+  errors.
+
+- Gave the FAQ section visual depth, same day — user felt it was too
+  plain, specifically the empty space beside the question list. Brand
+  rules explicitly forbid any hue outside navy/grey, so "add colour"
+  couldn't mean a literal accent colour — used the navy/grey palette
+  itself instead, plus motion: (1) `.faq-block` got a `var(--mist)`
+  background so the section reads as its own zone instead of blending
+  into the white pages above and below it; (2) a 3-layer drifting
+  diamond decoration fills the empty right column, reusing the exact
+  `diamondDrift1/2/3` keyframes already defined for the homepage hero —
+  but at navy-tinted low opacity (`rgba(36,54,85,...)`) rather than the
+  white tints those keyframes were originally paired with, since every
+  existing diamond decoration in the codebase (`.hero-diamonds`,
+  `.page-hero::before`, `.achieve::before`) was built for dark navy
+  backgrounds and would be invisible on this light one; hidden below
+  820px since it has no room to work at that size, not something a
+  phone visitor would miss; (3) each `.faq-item` now gets its own
+  `.reveal` class instead of the whole list revealing as one block, so
+  questions cascade in individually via the site's existing parent-
+  grouped stagger logic in main.js — zero JS changes needed, it "just
+  falls out of how .reveal is already used everywhere" (that's a direct
+  quote from main.js's own comment on the system); (4) hover on a
+  question now nudges its padding right via `--ease-spring` in addition
+  to the existing colour change, and an open item gets a subtle navy-
+  tinted background so the active question stays visually anchored even
+  after the chevron's mid-rotation. Verified with Playwright: all 5
+  items carry the `.in` class after scrolling into view (confirming the
+  stagger fired), hover and open states render as designed, diamonds
+  correctly hidden on 390px mobile, full 5-page sweep with zero console/
+  network errors.
+
+- Swapped 2 of the FAQ's 5 questions for deeper ones, same day — user
+  felt "How quickly will I hear back?" and "Can I enquire about just one
+  service?" were too shallow/transactional. Replaced with "What actually
+  happens between my enquiry and the event itself?" (process depth —
+  concept first, then project management coordinates timelines/
+  suppliers/logistics/venue liaison, one accountable point of contact
+  "from concept to breakdown," reusing that exact phrase from the
+  homepage hero's own script line) and "Why use one company instead of
+  separate suppliers for the stand, AV, furniture and electrics?"
+  (the actual value proposition, built on the "one accountable partner,
+  not seven suppliers" line that appears twice on services.html — not
+  invented, lifted straight from copy already live on the site). Same
+  grounding discipline as the first pass: no invented specifics, only
+  verified real facts and phrases already on the site. Verified with
+  Playwright: correct question text in order, answers open/render
+  correctly, no layout regression from the longer answer copy, zero
+  console/network errors across all 5 pages.
+
+- Added a new FAQ section to contact.html, 2026-09-21 — user's first ask
+  was open-ended ("I don't know where to place it"), so before touching
+  the live site, spawned an Explore subagent to read services.html,
+  about.html, contact.html and index.html in full plus CLAUDE.md's brand/
+  content rules, specifically so every FAQ answer would be grounded in
+  real, currently-true facts (10+ years, client relationships since 2018,
+  "we typically respond within one business day," the exact 7 live
+  service names) rather than invented specifics — the agent's research
+  flagged that an 8th service, Xboard (eco-friendly stands), exists in
+  the HTML but is commented out/disabled site-wide, so it was deliberately
+  left out of every FAQ answer to avoid advertising something not
+  actually offered. Built 3 real placement options as one Artifact
+  preview first (Contact-page teaser / dedicated FAQ page / Services-page
+  service-comparison), each with content tailored to that context and a
+  live clickable accordion, plus an honest recommendation (A+B together
+  beats C alone, since Services already explains each service in its own
+  copy). User picked option A, but positioned as its own standalone
+  section above "Get in touch" rather than nested inside the hero the
+  way the preview mocked it — not what was previewed, so treated as a
+  placement instruction, not a rubber-stamp of the mockup's exact layout.
+  Implementation: new `<section class="block faq-block">` inserted
+  between contact.html's `.page-hero` and the existing "Get in touch"
+  `.block`, using the site's existing `.eyebrow`/`.section-title`/`.lede`
+  classes (not new ones) so it matches every other section on the site
+  automatically. Caught one bug before it shipped: manually added a
+  `<span class="dia">` diamond bullet to the eyebrow, not realising
+  `.eyebrow::before` already renders one — produced a double-diamond;
+  removed the redundant span. New `.faq-list`/`.faq-item`/`.faq-q`/
+  `.faq-chevron`/`.faq-a-wrap`/`.faq-a` CSS added to styles.css (reuses
+  `--ease-spring` and the diamond-chevron visual language already
+  established elsewhere on the site) and a small accordion-toggle handler
+  added to main.js (multiple items can be open at once — not a strict
+  single-open accordion). Verified with Playwright: 5 questions, closed
+  by default, `aria-expanded` updates correctly, multiple items open
+  independently, correct flow into the "Get in touch" section below,
+  clean reflow on 390px mobile (question text wraps to 2 lines, chevron
+  stays aligned), and a full 5-page sweep with zero console/network
+  errors.
+
+- Real Font Awesome brand icons in the footer, replacing "FB"/"IG"/"X"/
+  "IN" text abbreviations, 2026-09-21. Designed as an Artifact preview
+  first (two options — same diamond container vs. a plain circle) before
+  touching the live site, per the user's ask. While building that
+  preview, discovered the diamond needed a real fix, not just new icons
+  inside the old container: the diamond shape was made by rotating the
+  whole box 45° and counter-rotating the icon -45° to cancel it back to
+  upright — technically upright, but rotated elements anti-alias
+  differently than axis-aligned ones, and it visibly degraded Instagram
+  and X's more detailed glyphs (Instagram's camera-lens shape and X's
+  mark both looked subtly mangled at 15px). User asked specifically
+  whether the icons could be "straight" — rebuilt the diamond with two
+  stacked `clip-path:polygon(...)` layers (border-colour layer behind,
+  fill layer inset 1px on top) instead of rotating anything at all, so
+  the icon glyph is never transformed. Confirmed side-by-side this was a
+  real, visible improvement, not just a technical nicety — both icons
+  render crisp and properly recognizable once nothing is rotating them.
+  User picked option A (diamond, now built the clip-path way).
+  Implementation on the live site: added Font Awesome 7.3.1's CSS
+  (`css/all.min.css` from cdnjs) to all 5 pages' `<head>`, right before
+  `css/styles.css` — deliberately the CSS build, not the JS/SVG kit the
+  Artifact preview used (that was only needed there because the Artifact
+  sandbox's CSP blocks external stylesheets outside Google Fonts but
+  allows cdnjs scripts; the live site has no such restriction, and plain
+  `<link rel="stylesheet">` + `<i class="fa-brands fa-x">` is simpler,
+  needs no JS, and matches the project's "no build step" ethos better).
+  Verified via Playwright network capture that this stays lean despite
+  loading the combined `all.min.css`: browsers only fetch a font file
+  when a glyph from it is actually used, so only `fa-brands-400.woff2`
+  downloads on every page — the unused solid/regular/v4-compat weights
+  never load. `.social` in styles.css rewritten to match the artifact's
+  clip-path approach exactly. Verified with Playwright across all 5
+  pages, desktop and 390px mobile: icons render correctly, hover fill/
+  lift works, zero console/network errors, and the font-family
+  correctly resolves to "Font Awesome 7 Brands".
+  **Not fixed, flagged during this work**: the LinkedIn icon's link is
+  still `href="#"` on all 5 pages — not a new issue, was already broken
+  before this change, just carried the same placeholder forward since no
+  real LinkedIn URL was provided. Send the real URL to close this out.
+
+- Same treatment on about.html's achievements grid 2026-09-21 (its list
+  of events is different from the homepage's — Institute of Retirement
+  Funds Africa, Morningstar Conference, Africa Utility Week, Africa
+  Energy Indaba, INN8 Investment Summit, "Your event next"). Same
+  `<a class="event">` pattern, same CSS (shared `.event` rule already
+  covers both pages), same verification-before-linking approach. Two
+  notable calls made during research: Africa Utility Week was rebranded
+  to "Enlit Africa" in 2020 (confirmed via a dedicated search on the
+  rebrand itself, not assumed) — linked to wearevuka.com/energy/
+  enlit-africa/, the event's current home under its new name, rather
+  than a dead "African Utility Week"-branded URL. Institute of Retirement
+  Funds Africa had two similar-looking candidate domains in search
+  results (irf.org.za and irfa.org.za) — went with irf.org.za since
+  that's the one search explicitly resolved as "the official website."
+  Verified with Playwright: all 6 hrefs/target/rel correct, "Your event
+  next" navigates to contact.html, full 5-page sweep with zero
+  console/network errors.
+
+- Made the homepage achievements grid clickable 2026-09-21 — the 6
+  `.event` cells (Batseta Winter Conference, Mining Indaba, 62nd
+  International Astronautical Congress, Aesthetic Medicine Congress SA,
+  Commonwealth Law Congress, "Your event next") were plain `<div>`s with
+  no links. Changed each to an `<a class="event">` (same visual cell,
+  `display:block` + `text-decoration:none` + `color:inherit` added in
+  styles.css so the anchor doesn't change the layout) with a background-
+  lighten hover/focus state for a clear interactive cue. The 5 real past
+  events open their own official site in a new tab
+  (`target="_blank" rel="noopener noreferrer"`); "Your event next" links
+  internally to contact.html. Did not guess any of the 5 external URLs —
+  verified each via WebSearch rather than relying on memory (conference
+  URLs and domains change, and a broken/wrong link on a client's site is
+  worse than not linking at all): Batseta → batseta.org.za (the
+  council's own stable domain, not a year-specific registration
+  microsite that'll go stale after 2026); Mining Indaba →
+  miningindaba.com; Aesthetic Medicine Congress SA → aesthmed.co.za (the
+  current 2026 official site); Commonwealth Law Congress →
+  commonwealthlawyers.com/events (the organizing CLA's events page, not
+  a single-year conference microsite). The 62nd IAC is a one-off 2011
+  Cape Town event with no surviving dedicated domain, so linked to the
+  organizing federation's own live IAC event page
+  (iafastro.org/events/iac) instead of a dead or archive-only URL.
+  Verified with Playwright: all 6 hrefs/target/rel attributes correct,
+  hover state renders with no layout shift, clicking "Your event next"
+  actually navigates to contact.html, full 5-page sweep with zero
+  console/network errors.
 
 - Fixed the "Coming Soon" link-preview bug 2026-09-20 — user shared
   keithandco.co.za and WhatsApp showed the old placeholder text. Root
