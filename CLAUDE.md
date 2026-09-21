@@ -124,6 +124,55 @@ change to ALL FIVE HTML files.
 
 ### Done (audited 2026-09-20)
 
+- Fixed the "Coming Soon" link-preview bug 2026-09-20 — user shared
+  keithandco.co.za and WhatsApp showed the old placeholder text. Root
+  cause: `index.html`'s `<title>` and `<meta name="description">` had
+  never been updated from the pre-launch placeholder ("Keith & Co.
+  Consulting — Coming Soon" / "Our new site is on its way") even though
+  the real homepage had long since been built below it — confirmed by
+  checking all 5 pages, only index.html still had the placeholder text,
+  the other 4 already had real titles. Not a caching issue at all; the
+  live HTML genuinely said that. Fixed the title/description to match
+  the real homepage content, and while in there discovered about.html/
+  services.html/gallery.html/contact.html already carry full Open Graph
+  and Twitter Card tags (`og:title`, `og:image`, `twitter:card
+  content="summary_large_image"`, etc.) that index.html never had —
+  brought index.html in line with the same pattern (also added the
+  favicon-32/16 and apple-touch-icon links every other page has but
+  index.html was missing). Mistake made and caught in the same turn:
+  first pass added og:/twitter: tags to all 5 pages without checking
+  whether they already existed further down `<head>` on the other 4 —
+  produced duplicate `og:title` etc. Caught by grepping tag counts,
+  removed the duplicates, verified exactly one `og:title` per page
+  afterward.
+  **Follow-up, now also done**: the pre-existing `og:image`/
+  `twitter:image` on all 5 pages pointed to `assets/images/og-cover.jpg`,
+  which didn't exist — so link previews on every page had been missing
+  their image, silently, this whole time (separate from the "Coming
+  Soon" text bug above). Designed 3 real directions as an Artifact
+  preview first (per the user's "let me see it before committing" ask)
+  — split layout reusing the dark-footer's logo treatment (navy panel
+  with the Allura-script "Keith & Co." wordmark + Archivo "Consulting")
+  against a full-bleed real stand photo, three photo options (BMK
+  Orthopaedics tower / Sentech double-storey / Sanlam), plus a mockup
+  of the actual WhatsApp share card so the comparison was apples-to-
+  apples with the user's original screenshot. Caught two real bugs in
+  the preview before showing it: no `<meta charset="UTF-8">` was
+  corrupting em dashes and checkmarks into mojibake, and a CSS
+  multi-background trick meant to fake the split panel in the WhatsApp
+  mock silently didn't render at all (the opaque photo just covered the
+  gradient under it) — rebuilt that mock to reuse the same panel/photo
+  markup as the real design instead of trying to fake it. User picked
+  variant A (BMK tower). Exported it to a real 1200×630 JPEG via
+  Playwright (screenshot the chosen `#frame-a` element at
+  deviceScaleFactor 1 so captured pixels match CSS pixels 1:1, then
+  resized the 1×1px rounding-error result to an exact 1200×630 and
+  saved at quality=78/subsampling=2 — the project's standard
+  compression settings), saved to `assets/images/og-cover.jpg` (112KB).
+  Verified with Playwright: the file 200s directly, all 5 pages'
+  `og:image`/`twitter:image` tags resolve to it, full 5-page sweep with
+  zero console/network errors.
+
 - Compression pass on this session's 3 newly-added photos 2026-09-20
   (Visio, Sanlam, IBI), applying the exact policy documented in the
   2026-09-18 compression entry rather than assuming it still holds —
