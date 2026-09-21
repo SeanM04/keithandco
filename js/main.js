@@ -167,6 +167,16 @@ if (statNums.length) {
   statNums.forEach((el) => statIO.observe(el));
 }
 
+/* FAQ accordion (contact.html) — click toggles one item open/closed;
+   others are left as they are, so more than one can be open at once. */
+document.querySelectorAll('.faq-q').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.faq-item');
+    const open = item.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+});
+
 /* Pre-select the enquiry form's service dropdown when arriving via
    contact.html?service=<slug> (linked from each service's "Enquire about
    this service" button on services.html) */
