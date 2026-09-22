@@ -121,6 +121,141 @@ change to ALL FIVE HTML files.
    needs a Creative Cloud subscription — client's free Adobe Fonts plan
    only includes Bold/Bold Condensed. Shipped on Bold instead (see brand
    rules above). Revisit only if Creative Cloud gets picked up anyway.
+8. `privacy-policy.html`'s Information Officer section deliberately gives
+   only a role email (info@keithandco.co.za), not a named individual —
+   client's explicit call 2026-09-22, also dropped the Reg No. from "Who
+   we are" the same day. Client should be aware (was flagged, not
+   independently verified as their specific situation) that POPIA still
+   requires an actual designated Information Officer to exist and be
+   registered with the Information Regulator — by default that's the
+   CEO/head of the company unless someone else is formally appointed —
+   regardless of whether the website names them. That registration is a
+   business-process action (via the Information Regulator), separate
+   from anything in this codebase. Also confirm the "Last updated" date
+   at the top once the content is fully signed off (currently just the
+   date it was drafted).
+
+### Done (audited 2026-09-22)
+
+- Turnstile went live, same day: client created the real widget on
+  Cloudflare, put the site key in `contact.html`, and enabled Turnstile +
+  the matching secret key on the correct Formspree form (there were two
+  decoys in their account under other projects/form IDs — walked through
+  confirming the ID actually matches the one in contact.html,
+  `xzepgqwg`, before treating it as done). Verified what's verifiable
+  without their Formspree/Cloudflare access: the real key is in place,
+  main.js's `turnstileConfigured` check now correctly detects it (a
+  submission now genuinely waits on a Turnstile token instead of going
+  straight through), and confirmed the domain-restriction mechanism
+  itself works — localhost correctly gets rejected ("Unable to connect
+  to website", Cloudflare error 110200) since the key is registered only
+  to keithandco.co.za, which is also why full end-to-end testing of a
+  successful token had to stop at this point; only the deployed domain
+  (or temporarily allow-listing localhost in the Cloudflare dashboard)
+  can complete that last leg. TODO 9 from the previous entry is done and
+  removed.
+- Two content simplifications to `privacy-policy.html`, client's call,
+  same day: dropped "(Reg No. 2015/449586/07)" from "Who we are", and
+  replaced the Information Officer section's two placeholders (name +
+  email, in a highlighted `.io-box`) with a single line pointing to
+  info@keithandco.co.za — no named individual. Flagged before making the
+  change, not just after: POPIA still requires an actual designated
+  Information Officer to exist and be registered with the Information
+  Regulator (defaults to the CEO/head of the company if no one else is
+  formally appointed) regardless of whether the site names them — that's
+  a business-process action, separate from this page's copy. Client
+  proceeded with the simplified version anyway. `.io-box` CSS removed
+  from styles.css since this was its only use. Verified with Playwright:
+  still 8 sections, correct text in both edited spots, zero console
+  errors, no overflow at 1440px or 390px.
+
+- Added `privacy-policy.html` (new page — same topbar/header/nav/footer as
+  the other five, `.page-hero`, then a `.policy` content block, all reusing
+  existing tokens/classes) plus a required consent checkbox and two spam
+  checks on the enquiry form, 2026-09-22. Drafted as an Artifact preview
+  first, per the user's ask, reusing the real CSS tokens/components
+  (confirmed Archivo/Inter/Allura all load from Google Fonts inside the
+  Artifact sandbox — Allura specifically because it's already this
+  codebase's own documented Halo Handletter fallback, so the preview used
+  the same fallback chain production does rather than approximating one).
+  User approved from that preview, then asked to implement for real.
+  - **Privacy Policy content**: all 8 sections the user asked for (who we
+    are, what we collect, why/how, who we share with, retention, POPIA
+    rights, Information Officer, how to complain). Every fact is either
+    already live elsewhere on the site (reg no., address, the exact 6
+    fields the contact form actually collects) or independently verified
+    — the Information Regulator's complaint email
+    (POPIAComplaints@inforegulator.org.za) was confirmed via a live search
+    rather than recalled, since a stale regulator contact on a compliance
+    page is worse than an obviously-flagged placeholder. Two genuine
+    unknowns (Information Officer name/email) are placeholders, not
+    invented — see TODO 8 above.
+  - **Consent checkbox**: native `required` checkbox directly above the
+    submit button, `.consent`/`form.enquiry .consent label` in styles.css.
+    Caught a real bug before this shipped: the browser's own required-
+    field validation was intercepting the submit event before it ever
+    reached the custom handler, so the on-brand `.consent-error` message
+    never actually showed (the browser's native tooltip did instead) —
+    fixed by adding `novalidate` to the form and having main.js call
+    `form.checkValidity()`/`reportValidity()` itself (with the checkbox's
+    `required` temporarily lifted) so name/email keep their native
+    handling while consent gets the styled message. Also caught a CSS
+    specificity collision: `form.enquiry label{text-transform:uppercase}`
+    was winning over `.consent label`'s own rule (more element selectors
+    = higher specificity) and rendering the consent copy as a shouty caps
+    block; fixed with a more specific `form.enquiry .consent label`
+    override. Error/invalid states deliberately stay navy, not the red
+    used in the first Artifact draft — matches `.form-note.is-error`,
+    which already made this same navy-only call sitewide to respect the
+    brand rules' "no other hues" line.
+  - **Spam protection**: the existing Formspree honeypot (`_gotcha`) is
+    unchanged; added a client-side copy of that same check (skip the
+    fetch entirely if it's filled, rather than spend a network call
+    Formspree was going to reject anyway) plus a `loaded_at` timestamp
+    field and a 3-second minimum-fill-time gate in main.js. Both fail
+    silently (no error shown) since a real visitor can't trigger either.
+  - **Cloudflare Turnstile**: chosen over a custom backend because there
+    isn't one — this is a static site posting straight to Formspree, and
+    Formspree verifies Turnstile server-side natively (confirmed via
+    their docs before committing to this route, rather than assuming).
+    Widget added with `data-size="flexible"` — the default fixed 300px
+    size doesn't fit inside form.enquiry's 36px padding on a 390px phone
+    and forced the whole `.contact-grid` column wider than the viewport
+    (a real "grid blowout": grid items don't shrink below their content's
+    intrinsic min-width by default); flexible sizing plus `min-width:0` on
+    `form.enquiry`/`.turnstile-block`/`.cf-turnstile` fixed it. Site key is
+    a placeholder (see TODO 9) — main.js only enforces a token once a real
+    key is detected, so the form isn't bricked in the meantime.
+  - **Footer + `<head>`**: one new "Privacy Policy" `<li>` in the Site
+    column, applied to all six pages now (the five existing ones plus the
+    new page itself, per this file's own "duplicated across pages, edit
+    all of them" rule above). Also added
+    `<link rel="privacy-policy" href="privacy-policy.html">` to all five
+    existing pages' `<head>` (and the same `rel` on the footer anchor) —
+    a real WHATWG HTML link type, confirmed via the spec rather than
+    invented, that a browser or password manager can use to find the
+    privacy policy programmatically.
+  - **`.html` URLs kept, not changed to clean URLs**: the user's brief
+    assumed clean URLs (`/contact`), but the live site uses `.html`
+    everywhere (nav, footer, canonical/og tags, sitemap) with no
+    `_redirects`/`netlify.toml` in the repo to support anything else —
+    flagged this to the user rather than silently picking one, kept
+    `.html` to match, left clean URLs as a separate future ask.
+  - Added `privacy-policy.html` to sitemap.xml (yearly/0.3, lowest
+    priority on the site — informational, not a conversion page). Left
+    robots.txt untouched: unlike developer-guide.html this page is meant
+    to be indexed.
+  - Verified with Playwright across all 6 pages, desktop + mobile: zero
+    console/network errors (the one expected exception being Cloudflare's
+    own "invalid site key" error on contact.html, which is correct given
+    the placeholder key), zero horizontal overflow. Directly exercised the
+    form's gate logic with Formspree's real endpoint intercepted (never
+    actually submitted anything to the live Formspree account): confirmed
+    instant-submit is silently blocked by the timing gate, honeypot-filled
+    is silently blocked, unticked consent after the timing gate shows the
+    styled error and does not submit, re-ticking clears it, empty
+    name/email still triggers native browser validation, and a fully
+    valid submission goes through end-to-end with the "sent" state.
 
 ### Done (audited 2026-09-21)
 
