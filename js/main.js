@@ -460,8 +460,78 @@ if (form) {
   const btn = form.querySelector('button[type="submit"]');
   const note = form.querySelector('.form-note');
 
+  /* Spam checks, in order: honeypot, then a minimum time-on-page, then the
+     required consent checkbox, then (once a real site key is in place)
+     Cloudflare Turnstile. Formspree already rejects a filled _gotcha
+     server-side on its own — this client-side copy just avoids spending a
+     network request on a submission that's going nowhere. loadedAt is read
+     fresh from the module scope rather than the hidden field, since that
+     field only exists to let Formspree's own notification show it. */
+  const loadedAt = Date.now();
+  const loadedAtField = form.querySelector('#loadedAt');
+  if (loadedAtField) loadedAtField.value = String(loadedAt);
+  const MIN_FILL_MS = 3000;
+
+  const consentBox = form.querySelector('#consent');
+  const consentRow = form.querySelector('#consentRow');
+  const consentError = form.querySelector('#consentError');
+  if (consentBox) {
+    consentBox.addEventListener('change', () => {
+      if (consentBox.checked) {
+        consentRow.classList.remove('invalid');
+        consentError.classList.remove('is-visible');
+      }
+    });
+  }
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
+
+    const hp = form.querySelector('.hp-field');
+    if (hp && hp.value) return; // honeypot tripped — say nothing, do nothing
+
+    if (Date.now() - loadedAt < MIN_FILL_MS) return; // submitted too fast to be a person
+
+    /* The form carries novalidate so the required checkbox below doesn't
+       jump the queue with the browser's own validation bubble before this
+       handler even runs (that's what was happening before this block
+       existed — the native "required" on #consent blocked the submit
+       event outright). Every other required field (name, email) still
+       gets the browser's native handling here, just deferred until now;
+       only the checkbox is excluded, since it gets the styled message
+       below instead. */
+    if (consentBox) consentBox.required = false;
+    const restValid = form.checkValidity();
+    if (consentBox) consentBox.required = true;
+    if (!restValid) { form.reportValidity(); return; }
+
+    if (consentBox && !consentBox.checked) {
+      consentRow.classList.add('invalid');
+      consentError.classList.add('is-visible');
+      consentBox.focus();
+      return;
+    }
+    if (consentRow) consentRow.classList.remove('invalid');
+    if (consentError) consentError.classList.remove('is-visible');
+
+    /* Only enforced once YOUR_TURNSTILE_SITE_KEY in contact.html has been
+       swapped for a real key — until then the widget can't produce a
+       token, and the form should keep working without it rather than
+       silently brick every enquiry. */
+    const turnstileEl = form.querySelector('.cf-turnstile');
+    const turnstileConfigured = turnstileEl && turnstileEl.dataset.sitekey && turnstileEl.dataset.sitekey !== 'YOUR_TURNSTILE_SITE_KEY';
+    if (turnstileConfigured) {
+      const token = form.querySelector('[name="cf-turnstile-response"]')?.value;
+      if (!token) {
+        if (note) {
+          note.textContent = 'Just a moment — the verification check is still loading. Try sending again in a second.';
+          note.classList.remove('is-success');
+          note.classList.add('is-error');
+        }
+        return;
+      }
+    }
+
     btn.disabled = true;
     btn.textContent = 'Sending…';
 
@@ -472,6 +542,7 @@ if (form) {
     }).then((res) => {
       if (res.ok) {
         form.reset();
+        if (loadedAtField) loadedAtField.value = String(loadedAt); // form.reset() blanks it; keep it truthful for Formspree's notification
         if (note) {
           note.textContent = 'We typically respond within one business day.';
           note.classList.remove('is-error', 'is-success');

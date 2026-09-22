@@ -9,6 +9,7 @@
 <link rel="icon" type="image/png" href="assets/logos/favicon-32.png" sizes="32x32">
 <link rel="icon" type="image/png" href="assets/logos/favicon-16.png" sizes="16x16">
 <link rel="apple-touch-icon" href="assets/logos/apple-touch-icon.png">
+<link rel="privacy-policy" href="privacy-policy.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Keith &amp; Co. Consulting">
 <meta property="og:title" content="Contact — Keith &amp; Co. Consulting">
@@ -85,9 +86,10 @@
       </div>
     </div>
 
-    <form class="enquiry reveal" action="https://formspree.io/f/xzepgqwg" method="POST">
+    <form class="enquiry reveal" action="https://formspree.io/f/xzepgqwg" method="POST" novalidate>
       <input type="hidden" name="_subject" value="New enquiry — Keith &amp; Co website">
       <input type="text" name="_gotcha" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <input type="hidden" name="loaded_at" id="loadedAt">
       <div class="f-row">
         <div><label for="fn">Full name</label><input id="fn" name="name" required autocomplete="name"></div>
         <div><label for="co">Company</label><input id="co" name="company" autocomplete="organization"></div>
@@ -109,6 +111,19 @@
       </select>
       <label for="ms">Tell us about your event</label>
       <textarea id="ms" name="message" placeholder="Event name, venue, dates, stand size, anything else useful…"></textarea>
+
+      <div class="turnstile-block">
+        <label>Verification</label>
+
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAAE_vzgz2VyDbFHHU" data-theme="light" data-size="flexible"></div>
+      </div>
+
+      <div class="consent" id="consentRow">
+        <input type="checkbox" id="consent" name="consent" value="yes" required aria-describedby="consentError">
+        <label for="consent">I agree that Keith &amp; Co may process my details to respond to my enquiry, in line with the <a href="privacy-policy.html">Privacy Policy</a>.</label>
+      </div>
+      <p class="consent-error" id="consentError" role="alert">Please tick the box to confirm you agree before sending.</p>
+
       <button class="btn btn-navy" type="submit">Send enquiry</button>
       <p class="form-note">We typically respond within one business day.</p>
       <div class="send-status" aria-live="polite">
@@ -243,6 +258,7 @@
           <li><a href="services.html">Services</a></li>
           <li><a href="gallery.html">Gallery</a></li>
           <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="privacy-policy.html" rel="privacy-policy">Privacy Policy</a></li>
         </ul>
       </div>
       <div>
@@ -263,6 +279,10 @@
   </div>
 </footer>
 
+<!-- Cloudflare Turnstile — only this page loads it, since it's the only
+     page with the form. Loaded async/defer per Cloudflare's own docs;
+     it self-renders into the .cf-turnstile div above once ready. -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <script src="js/main.js"></script>
 </body>
 </html>
