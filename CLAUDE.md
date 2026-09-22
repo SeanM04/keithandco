@@ -330,7 +330,7 @@ change to ALL FIVE HTML files.
   the live site, spawned an Explore subagent to read services.html,
   about.html, contact.html and index.html in full plus CLAUDE.md's brand/
   content rules, specifically so every FAQ answer would be grounded in
-  real, currently-true facts (10+ years, client relationships since 2018,
+  real, currently-true facts (10+ years, client relationships since 2010,
   "we typically respond within one business day," the exact 7 live
   service names) rather than invented specifics — the agent's research
   flagged that an 8th service, Xboard (eco-friendly stands), exists in
