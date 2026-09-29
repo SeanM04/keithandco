@@ -3,8 +3,10 @@
 Static marketing website for Keith & Co Consulting (Pty) Ltd, a South African
 event infrastructure and project management company (custom exhibition stands,
 shell schemes, AV, furniture hire, marquees, electrics).
-Domain: www.keithandco.co.za. The site's job is to look professional, be found
-online, and generate enquiries.
+Domain: keithandco.co.za — the Netlify primary domain; www.keithandco.co.za
+301-redirects to it, so every absolute URL meant for Google (canonical tags,
+sitemap, structured data) uses the bare domain. The site's job is to look
+professional, be found online, and generate enquiries.
 
 ## Stack & structure
 
@@ -134,6 +136,72 @@ change to ALL FIVE HTML files.
    from anything in this codebase. Also confirm the "Last updated" date
    at the top once the content is fully signed off (currently just the
    date it was drafted).
+9. Off-site Google setup (not code, needs the client's Google account).
+   A Business Profile already exists: "Keith & Co Consulting (Pty) Ltd",
+   "Exhibition planner in Sandton", seen 2026-09-29. At that point it had
+   no hours and no reviews, and its address was jumbled ("Cnr Harrow &,
+   Sandhurst Office Park, Rivonia Rd, ..."). Whoever manages it should add
+   the hours and fix the address there. Hours can't go in sitemap.xml,
+   which only lists URLs. Once the client confirms the hours, they can
+   also go into the JSON-LD as `openingHoursSpecification`, shown visibly
+   on contact.html so the markup matches the page. Still to do: a Search
+   Console *Domain* property for keithandco.co.za (DNS is at GoDaddy —
+   nameservers `domaincontrol.com` — so the TXT verification record goes
+   there), then submit `https://keithandco.co.za/sitemap.xml`. Keep the
+   profile's name/address/phone identical to the footer and the JSON-LD
+   on index.html.
+10. Social links to confirm with the client. Google's results show
+   Instagram **@keithcompany** (bio matches the company, and X is
+   @KeithCompany too), but the footer and the JSON-LD `sameAs` link
+   **@Keithandco_86**. Instagram hides profiles from logged-out fetches,
+   so this couldn't be verified from here. Confirm which one is current
+   before changing either. The footer's LinkedIn icon is still `href="#"`,
+   even though Google shows a "Keith & Co Consulting (Pty) Ltd" LinkedIn
+   result; get that URL from the client. Do NOT use
+   linkedin.com/company/keithandco, which is a different company (a
+   creative/design studio).
+
+### Done (audited 2026-09-29)
+
+- Google search-presence groundwork, 2026-09-29 — user wants a "keith and
+  co" search to show a proper listing (sitelinks on the left, business
+  panel on the right). Sitelinks are fully automatic and the panel comes
+  from Google Business Profile, so the code side is only about giving
+  Google clean, consistent signals:
+  - **Canonical host/paths**: checked the live site rather than trusting
+    the notes. `www` 301s to the bare domain, and Netlify's HTML
+    post-processing rewrites the source's `.html` links to clean paths
+    (`/about`), while `/about` and `/about.html` both serve 200. That
+    corrects the privacy-policy entry below, which says the live site uses
+    `.html` everywhere: the *source* does, the *live* links don't. Added
+    `<link rel="canonical">` to all six public pages pointing at the clean,
+    bare-domain URL, and rewrote `sitemap.xml` and robots.txt's `Sitemap:`
+    line to match. Before this, every sitemap URL was a www redirect.
+    `og:url`/`og:image` still use www + `.html`. Left as-is, since Google
+    ignores `og:url` and the redirects resolve fine for link previews.
+  - **Structured data**: one JSON-LD `@graph` in index.html's `<head>`:
+    `WebSite` (sets the site name Google shows above the result, with
+    "Keith & Co"/"Keith and Co Consulting" as alternates) plus
+    `LocalBusiness` (legal name, logo, address, phone, email, the three real
+    social profiles from the footer; the LinkedIn placeholder is excluded).
+    No hours or founding date, since neither is published on the site and
+    they weren't invented.
+  - **Kept internal pages out of results/sitelinks**: `noindex, nofollow`
+    on design-concept-signature.html (same tag as developer-guide.html).
+    coming-soon.html deliberately has NO noindex: commit cc710a5 once
+    copied its markup over index.html, and a noindex carried along that
+    way would drop the homepage from Google. It's unlinked, so the risk
+    of it being indexed is low. Delete it if the client no longer needs it.
+  - Favicon already met Google's requirements (favicon.ico includes
+    48×48; apple-touch-icon is 180×180), so no change was made.
+  - Line endings are mixed across files (e.g. index/about/services/contact
+    are CRLF, gallery/privacy-policy/sitemap are LF). Git Bash's `grep -c
+    $'\r'` misreports this, so check with Python before scripted edits and
+    write back each file's own ending.
+  - Verified: JSON-LD parses, and its address/phone/email match the
+    footer. Exactly one canonical per page. Every canonical and sitemap
+    URL, plus the logo and cover image, returns 200 on the live bare
+    domain with zero redirects.
 
 ### Done (audited 2026-09-22)
 
