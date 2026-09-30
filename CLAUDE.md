@@ -161,6 +161,78 @@ change to ALL FIVE HTML files.
    linkedin.com/company/keithandco, which is a different company (a
    creative/design studio).
 
+### Done (2026-09-30)
+
+- Added Liberty (Standard Bank Group) to the client-logo carousel on
+  index.html and about.html, after Sanlam in both the visible set and the
+  `aria-hidden` duplicate set. Unlike the other logos, the supplied file is
+  a solid navy block, and it came with an off-white margin and a grey
+  keyline that showed as a frame on the white `.has-logo` tile. It was
+  cropped to the navy field and resized to 400×149. The untouched original
+  is in `assets/logos/_originals/client-liberty.png`. Under the carousel's
+  grayscale filter it reads as a solid dark-grey block, heavier than the
+  line-art logos. If that bothers the client, swap in Liberty's positive
+  (navy-on-white) version.
+- Added 4 Custom Stands photos to gallery.html, the site's first `.webp`
+  images. Each client was confirmed from the stand's own signage. The files
+  were renamed to the `custom-stand-*` convention (the originals were
+  `first medical.webp`, `inova.webp`, `momentum.webp` and `stanlib.webp`).
+  First Medical Company — Red Frame Design (`custom-stand-first-medical3.webp`)
+  sits after the other two First Medical photos, and Momentum Health —
+  Nautical Theme (`custom-stand-momentum2.webp`) sits after the existing
+  Momentum Health one. Inova Pharmaceuticals and STANLIB go at the end of
+  the Custom Stands run, after Austell — Feature Wall. The curated page-1
+  order is unchanged. All four are already ≤1280px on the long edge at
+  100–157KB, so no compression was needed. Custom Stands is now 28 photos
+  (36 in total). Verified with Playwright at 1440px and 390px: the tab
+  counts are right, Show More reveals all four, each opens in the lightbox
+  with the right caption, there is no horizontal overflow, and there are
+  no console or network errors. Neither Inova nor STANLIB is in the
+  client-logo carousel.
+- Hid 3 repetitive Custom Stands photos, client's call, same day: BMK
+  Orthopaedics — Product Display, Austell — Product Counter and First
+  Medical Company — Alternate Angle. (The user first hid BMK — Entrance
+  Tower, then swapped: it is the only BMK shot showing the whole stand, and
+  hiding it had pushed Product Display onto the first screen.) They are
+  commented out in gallery.html rather than deleted, so each can be
+  restored by removing the `<!-- -->` pair, and the image files stay in
+  `gallery/`. A CSS hide class would not work here: main.js's `applyFilter`
+  resets `.hidden` on every tab click and counts every `.g-item` in the DOM
+  for "Show N more". Custom Stands is now 25 (33 in total).
+- Then swapped Mahlako with Momentum Health — Nautical Theme, user's pick,
+  same day. The All Work first screen now reads Liberty, Batseta, BMK
+  Orthopaedics — Entrance Tower, NTT DATA, Sentech, Maksure Risk Solutions,
+  Momentum Health — Nautical Theme, Sanlam. Mahlako sits where Momentum's
+  photo was, right after Momentum Health (21st in All Work).
+- Two more position swaps, user's pick, same day, aimed at the Custom
+  Stands tab's first screen: BMK — Instrument Counter ↔ First Medical
+  Company — Red Frame Design, and Vunani ↔ Allan Gray — Reception Wall.
+  Custom Stands page 1 now reads Liberty, Batseta, BMK — Entrance Tower,
+  Sentech, Momentum — Nautical Theme, Sanlam, First Medical — Red Frame
+  Design, Allan Gray — Reception Wall. Instrument Counter now follows First
+  Medical Company, and Vunani follows Truffle. Nothing hidden; the All Work
+  first screen is unchanged. That left Allan Gray — Lounge Area right after
+  Reception Wall (first photo after Show More), so Lounge Area was moved
+  down to sit between Medika SA and Momentum Health (17th in Custom
+  Stands). Verified: no two same-client photos are adjacent anywhere in
+  All Work or Custom Stands.
+- Compressed today's new images, same day. The 4 WebP photos were already
+  lossy WebP at roughly q80: re-encoding at q80 saved only 3–5%, and q85
+  made them bigger. They were also at or below the gallery's 154KB average,
+  and all under the 1400px resize threshold. Re-encoded at WebP q75,
+  `method=6`, which saves 15–17% each and was indistinguishable from the
+  source in a 2× zoomed crop of fine signage text. Dimensions unchanged.
+  `client-liberty.png` was quantized to 64 colours (no dither): 26.7KB →
+  9.2KB, identical at 8× zoom, since it is a flat two-colour logo. Total
+  562KB → 458KB. Pre-compression copies are in
+  `assets/images/_originals/gallery/` and
+  `assets/logos/_originals/client-liberty-400px.png`. Don't re-encode these
+  WebPs again: each pass is another generation of lossy loss.
+- No unused Custom Stands photos remain as replacements:
+  `custom-stand-ashburton3.jpeg` is a byte-identical copy of
+  `custom-stand-ashburton.jpeg` (already live), and the only other unused
+  gallery files are a Palo Alto shell-scheme shot and a marquee photo.
+
 ### Done (audited 2026-09-29)
 
 - Google search-presence groundwork, 2026-09-29 — user wants a "keith and
